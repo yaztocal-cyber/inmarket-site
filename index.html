@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,615 +6,966 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>InMarket.ai — We Know Who Just Googled Your Business</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#02050A;--cyan:#00D4FF;--cyan2:#00FFB2;--gold:#FFB800;
-  --red:#FF2D55;--text:#E8F4FF;--muted:#5A7898;--dim:#1A3048;
-  --border:rgba(0,212,255,0.09);--hot:rgba(0,212,255,0.32);
-  --glow:rgba(0,212,255,0.5);
+:root {
+  --bg: #03080F;
+  --bg2: #060E1A;
+  --bg3: #091422;
+  --card: #0A1628;
+  --cyan: #00D4FF;
+  --cyan2: #00FFB2;
+  --gold: #FFB800;
+  --red: #FF3355;
+  --white: #FFFFFF;
+  --text: #D8ECFF;
+  --body: #9BBDD8;
+  --muted: #5A7898;
+  --dim: #1E3A52;
+  --border: rgba(0,212,255,0.12);
+  --hot: rgba(0,212,255,0.35);
+  --glow: rgba(0,212,255,0.45);
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-serif;font-weight:400;overflow-x:hidden;cursor:none}
 
-/* CURSOR */
-#cur{position:fixed;width:10px;height:10px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:width .15s,height .15s}
-#cur-r{position:fixed;width:36px;height:36px;border:1px solid var(--hot);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .1s ease}
-body:has(a:hover) #cur{width:18px;height:18px;background:var(--gold)}
-body:has(a:hover) #cur-r{width:52px;height:52px;border-color:rgba(255,184,0,.5)}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  cursor: none;
+}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:600;height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 52px;background:rgba(2,5,10,0.6);backdrop-filter:blur(32px);border-bottom:1px solid var(--border)}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.12em;color:var(--text);text-decoration:none}
-.logo em{font-style:normal;color:var(--cyan);text-shadow:0 0 28px var(--glow)}
-.nav-links{display:flex;gap:36px;list-style:none}
-.nav-links a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
-.nav-links a:hover{color:var(--cyan)}
-.nav-btn{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#000;background:var(--cyan);padding:11px 26px;text-decoration:none;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:all .2s;box-shadow:0 0 28px var(--glow)}
-.nav-btn:hover{background:#fff;box-shadow:0 0 50px rgba(255,255,255,.5)}
+/* ── CURSOR ── */
+#cur { position: fixed; width: 10px; height: 10px; background: var(--cyan); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); mix-blend-mode: screen; transition: width .15s, height .15s; }
+#cur-r { position: fixed; width: 36px; height: 36px; border: 1px solid var(--hot); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: all .1s ease; }
+body:has(a:hover) #cur { width: 18px; height: 18px; background: var(--gold); }
+body:has(a:hover) #cur-r { width: 52px; height: 52px; border-color: rgba(255,184,0,.5); }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 600;
+  height: 72px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 52px;
+  background: rgba(3,8,15,0.85);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+}
+.logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: .12em; color: var(--white); text-decoration: none; }
+.logo em { font-style: normal; color: var(--cyan); text-shadow: 0 0 24px var(--glow); }
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--body); text-decoration: none; transition: color .2s; }
+.nav-links a:hover { color: var(--cyan); }
+.nav-btn {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: #000; background: var(--cyan); padding: 12px 28px; text-decoration: none;
+  clip-path: polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+  transition: all .2s; box-shadow: 0 0 24px var(--glow);
+}
+.nav-btn:hover { background: #fff; box-shadow: 0 0 40px rgba(255,255,255,.4); }
+
+/* ── WRAP ── */
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 52px; }
+
+/* ── SECTION LABELS ── */
+.s-eyebrow {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--cyan);
+  display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
+}
+.s-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--cyan); box-shadow: 0 0 8px var(--glow); }
+
+.s-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 5.5vw, 5.5rem);
+  letter-spacing: .02em; line-height: .95; color: var(--white);
+  margin-bottom: 24px;
+}
+
+.s-body {
+  font-size: 1.25rem; font-weight: 500; color: var(--body);
+  line-height: 1.7; max-width: 580px;
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: #000; background: var(--cyan); padding: 16px 36px;
+  text-decoration: none;
+  clip-path: polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+  box-shadow: 0 0 32px var(--glow); transition: all .3s;
+}
+.btn-primary:hover { background: #fff; box-shadow: 0 0 60px rgba(255,255,255,.4); transform: translateY(-2px); }
+
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--cyan); background: transparent; padding: 16px 36px;
+  text-decoration: none;
+  clip-path: polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+  border: 1px solid var(--hot); transition: all .3s;
+}
+.btn-outline:hover { background: rgba(0,212,255,.08); transform: translateY(-2px); }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   HERO — CITY GRID + PARTICLE CANVAS
+   HERO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.hero{position:relative;height:100vh;min-height:720px;display:flex;align-items:flex-end;padding:0 80px 110px;overflow:hidden}
+.hero {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 120px 52px 80px;
+  overflow: hidden;
+}
 
-/* CITY SKYLINE via SVG data URI */
-.hero-city{
-  position:absolute;inset:0;z-index:0;
-  background-color:#020810;
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background-color: #020810;
   background-image:
-    /* stars */
-    radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,.7) 0%, transparent 100%),
-    radial-gradient(1px 1px at 25% 8%, rgba(255,255,255,.5) 0%, transparent 100%),
-    radial-gradient(1px 1px at 40% 20%, rgba(255,255,255,.6) 0%, transparent 100%),
-    radial-gradient(1px 1px at 55% 12%, rgba(255,255,255,.4) 0%, transparent 100%),
-    radial-gradient(1px 1px at 70% 18%, rgba(255,255,255,.7) 0%, transparent 100%),
-    radial-gradient(1px 1px at 85% 9%, rgba(255,255,255,.5) 0%, transparent 100%),
-    radial-gradient(1px 1px at 15% 30%, rgba(255,255,255,.3) 0%, transparent 100%),
-    radial-gradient(1px 1px at 60% 5%, rgba(255,255,255,.6) 0%, transparent 100%),
-    radial-gradient(1px 1px at 90% 25%, rgba(255,255,255,.4) 0%, transparent 100%),
-    radial-gradient(1px 1px at 45% 35%, rgba(255,255,255,.3) 0%, transparent 100%),
-    /* city glow on horizon */
-    radial-gradient(ellipse 100% 30% at 50% 100%, rgba(0,120,255,.18) 0%, rgba(0,212,255,.06) 40%, transparent 70%),
-    radial-gradient(ellipse 60% 20% at 30% 100%, rgba(255,150,0,.08) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 15% at 75% 100%, rgba(0,212,255,.1) 0%, transparent 60%);
-}
-
-/* CSS SKYLINE BUILDINGS */
-.city-buildings{
-  position:absolute;bottom:0;left:0;right:0;z-index:1;height:55%;
-  background:
-    /* Building silhouettes using linear-gradient stops */
-    linear-gradient(to top,
-      #020810 0px, #020810 1px,
-      transparent 1px
-    ),
-    /* Far buildings (lighter) */
-    linear-gradient(180deg, transparent 0%, rgba(3,10,22,.4) 100%);
-}
-
-/* Individual building blocks as pseudo-elements on spans */
-.buildings{position:absolute;bottom:0;left:0;right:0;height:100%;z-index:1}
-.buildings::before{
-  content:'';position:absolute;bottom:0;left:0;right:0;
-  height:50%;
-  background:
-    linear-gradient(to right,
-      #020810 0%, #020810 2%,
-      transparent 2%, transparent 3%,
-      #020810 3%, #020810 4%,
-      transparent 4%, transparent 5.5%,
-      #020810 5.5%, #020810 7%,
-      transparent 7%, transparent 8%,
-      #020810 8%, #020810 10%,
-      transparent 10%, transparent 11%,
-      #020810 11%, #020810 13%,
-      transparent 13%, transparent 14.5%,
-      #020810 14.5%, #020810 16%,
-      transparent 16%, transparent 17%,
-      #020810 17%, #020810 19%,
-      transparent 19%, transparent 20.5%,
-      #020810 20.5%, #020810 22%,
-      transparent 22%, transparent 23%,
-      #020810 23%, #020810 25%,
-      transparent 25%
-    );
-}
-
-/* Canvas sits above city for particles */
-#hero-canvas{position:absolute;inset:0;z-index:2}
-
-/* Hero overlays */
-.hero-grad{position:absolute;inset:0;z-index:3;background:linear-gradient(to top,var(--bg) 0%,rgba(2,5,10,.7) 30%,rgba(2,5,10,.3) 60%,rgba(2,5,10,.5) 100%)}
-.hero-grad-left{position:absolute;inset:0;z-index:3;background:linear-gradient(to right,rgba(2,5,10,.9) 0%,rgba(2,5,10,.5) 40%,transparent 70%)}
-.hero-scanlines{position:absolute;inset:0;z-index:4;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,212,255,.012) 3px,rgba(0,212,255,.013) 4px);pointer-events:none}
-
-.hero-content{position:relative;z-index:5;max-width:860px}
-
-.hero-badge{display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);border:1px solid var(--hot);padding:8px 18px;margin-bottom:32px;background:rgba(0,212,255,.05)}
-.blink{width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 8px var(--red);animation:blnk 1s steps(1) infinite}
-@keyframes blnk{0%,100%{opacity:1}50%{opacity:0}}
-
-.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,13vw,14rem);line-height:.88;letter-spacing:-.01em;margin-bottom:28px}
-.hl{display:block;color:var(--cyan);text-shadow:0 0 80px rgba(0,212,255,.8),0 0 200px rgba(0,212,255,.3),0 0 400px rgba(0,212,255,.1)}
-.wh{display:block;color:var(--text)}
-
-.hero-sub{font-size:1.3rem;font-weight:300;color:rgba(232,244,255,.65);max-width:540px;line-height:1.55;margin-bottom:44px}
-.hero-btns{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:48px}
-.btn-p{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;background:var(--cyan);color:#000;padding:15px 36px;text-decoration:none;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);box-shadow:0 0 40px var(--glow);transition:all .3s}
-.btn-p:hover{background:#fff;box-shadow:0 0 70px rgba(255,255,255,.5);transform:translateY(-3px)}
-.btn-g{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:transparent;color:var(--cyan);padding:15px 36px;text-decoration:none;border:1px solid var(--hot);clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:all .3s}
-.btn-g:hover{background:rgba(0,212,255,.08);transform:translateY(-3px)}
-.hero-trust{display:flex;gap:28px;flex-wrap:wrap}
-.tc{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--muted);display:flex;align-items:center;gap:7px;text-transform:uppercase}
-.tc::before{content:'✓';color:var(--cyan2)}
-
-.scroll-ind{position:absolute;bottom:36px;right:60px;z-index:5;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
-.scroll-line{width:1px;height:60px;background:linear-gradient(to bottom,var(--cyan),transparent);animation:spulse 2s ease-in-out infinite}
-@keyframes spulse{0%,100%{opacity:.4;transform:scaleY(.7)}50%{opacity:1;transform:scaleY(1)}}
-
-/* TICKER */
-.ticker-bar{background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.t-label{position:absolute;left:0;top:0;bottom:0;z-index:2;display:flex;align-items:center;padding:0 22px;gap:8px;background:var(--cyan);color:#000;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
-.t-dot{width:5px;height:5px;border-radius:50%;background:#000;animation:blnk 1s steps(1) infinite}
-.ticker-wrap{padding-left:140px;overflow:hidden}
-.ticker-inner{display:flex;animation:tkr 38s linear infinite;width:max-content}
-@keyframes tkr{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.tick{display:flex;align-items:center;gap:14px;padding:13px 40px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;border-right:1px solid var(--border)}
-.tq{color:var(--cyan)}.tc2{color:var(--text)}.tt{color:var(--dim)}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   HOW IT WORKS — BLUEPRINT GRID BG
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.section-how{position:relative;display:flex;min-height:100vh;overflow:hidden}
-
-.how-bg{
-  position:absolute;inset:0;z-index:0;
-  background-color:#020913;
-  background-image:
-    /* blueprint grid */
-    linear-gradient(rgba(0,212,255,.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,212,255,.06) 1px, transparent 1px),
-    linear-gradient(rgba(0,212,255,.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,212,255,.02) 1px, transparent 1px),
-    /* large diagonal accent */
-    linear-gradient(135deg, transparent 30%, rgba(0,212,255,.015) 50%, transparent 70%),
-    /* depth glow */
-    radial-gradient(ellipse 70% 60% at 70% 50%, rgba(0,212,255,.05) 0%, transparent 70%);
-  background-size:80px 80px, 80px 80px, 20px 20px, 20px 20px, 100% 100%, 100% 100%;
-}
-
-.how-left{position:relative;z-index:1;width:44%;flex-shrink:0;padding:120px 60px 120px 80px;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(to right,rgba(2,5,10,.98) 0%,rgba(2,5,10,.9) 80%,transparent 100%)}
-.how-right{position:relative;z-index:1;flex:1;padding:120px 80px 120px 60px;display:flex;flex-direction:column;justify-content:center}
-
-.s-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:14px;margin-bottom:20px}
-.s-label::before{content:'';width:28px;height:1px;background:var(--cyan);box-shadow:0 0 8px var(--glow)}
-.s-head{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,5vw,5rem);letter-spacing:.02em;line-height:.95;margin-bottom:20px}
-.s-sub{font-size:1.1rem;color:var(--muted);font-weight:300;line-height:1.65;max-width:400px}
-
-.steps{display:flex;flex-direction:column;gap:0;margin-top:24px}
-.step{padding:28px 0;border-bottom:1px solid var(--border);cursor:pointer;position:relative;transition:all .3s}
-.step::before{content:'';position:absolute;left:-60px;top:0;bottom:0;width:3px;background:var(--border);transition:all .4s}
-.step.active::before{background:var(--cyan);box-shadow:0 0 16px var(--glow)}
-.step-n{font-family:'Bebas Neue',sans-serif;font-size:3.2rem;line-height:1;color:var(--dim);margin-bottom:8px;transition:color .3s;letter-spacing:.04em}
-.step.active .step-n{color:var(--cyan);text-shadow:0 0 30px var(--glow)}
-.step h3{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.06em;color:var(--muted);transition:color .3s}
-.step.active h3{color:var(--text)}
-.step p{font-size:.9rem;color:var(--muted);line-height:1.7;font-weight:300;max-height:0;overflow:hidden;transition:max-height .5s ease,opacity .5s,margin-top .3s;opacity:0}
-.step.active p{max-height:200px;opacity:1;margin-top:12px}
-
-.how-panel{display:none}
-.how-panel.active{display:flex;flex-direction:column;justify-content:center;height:100%}
-
-/* terminal */
-.terminal{background:#000;border:1px solid rgba(0,212,255,.22);box-shadow:0 0 60px rgba(0,212,255,.14),inset 0 0 60px rgba(0,0,0,.5)}
-.term-bar{display:flex;align-items:center;gap:8px;padding:12px 18px;background:#080808;border-bottom:1px solid rgba(0,212,255,.08)}
-.term-title{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.1em;flex:1;text-align:center}
-.dr{width:10px;height:10px;border-radius:50%;background:#FF5F57}.dy{width:10px;height:10px;border-radius:50%;background:#FFBD2E}.dg{width:10px;height:10px;border-radius:50%;background:#28C840}
-.term-body{padding:28px}
-.t-comment{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:.08em;margin-bottom:20px}
-
-.sig-row{display:flex;align-items:center;gap:14px;padding:13px 16px;background:rgba(0,212,255,.03);border:1px solid var(--border);margin-bottom:10px;font-family:'JetBrains Mono',monospace;font-size:11px;animation:slideIn .4s ease both}
-.sig-row:nth-child(1){animation-delay:.05s}.sig-row:nth-child(2){animation-delay:.15s}.sig-row:nth-child(3){animation-delay:.25s}.sig-row:nth-child(4){animation-delay:.35s}
-@keyframes slideIn{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
-.sig-dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--glow);flex-shrink:0;animation:pdot 2s infinite}
-@keyframes pdot{0%,100%{box-shadow:0 0 6px var(--glow)}50%{box-shadow:0 0 20px var(--glow)}}
-.sq{color:var(--cyan);flex:1}.sl{color:var(--text);font-size:10px}.st{color:var(--cyan2);font-size:10px}
-
-.profile-card{background:rgba(0,0,0,.7);border:1px solid var(--hot);padding:32px;box-shadow:0 0 60px rgba(0,212,255,.12)}
-.p-avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),#003050);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:26px;color:#000;margin-bottom:18px}
-.p-name{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.05em;margin-bottom:4px}
-.p-loc{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:20px}
-.p-field{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(0,212,255,.04);border:1px solid var(--border);margin-bottom:8px;font-family:'JetBrains Mono',monospace;font-size:11px}
-.pf-k{color:var(--muted)}.pf-v{color:var(--cyan)}
-.p-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,255,178,.1);border:1px solid rgba(0,255,178,.3);color:var(--cyan2);font-family:'JetBrains Mono',monospace;font-size:10px;padding:5px 14px;margin-top:16px;letter-spacing:.08em}
-
-.d-target{display:flex;align-items:center;gap:16px;padding:14px 18px;background:rgba(0,0,0,.5);border:1px solid var(--border);margin-bottom:10px;font-family:'JetBrains Mono',monospace;font-size:11px;transition:all .3s}
-.d-target:hover{border-color:var(--hot);box-shadow:0 0 20px rgba(0,212,255,.1)}
-.d-icon{font-size:18px}.d-name{color:var(--text);flex:1}.d-status{font-size:9px;letter-spacing:.1em;color:var(--cyan2);background:rgba(0,255,178,.1);border:1px solid rgba(0,255,178,.25);padding:3px 10px}
-.d-line{height:1px;background:linear-gradient(90deg,var(--cyan),transparent);margin-bottom:14px}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   COMPARE — RADAR / HUD BACKGROUND
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.section-compare{position:relative;padding:140px 0;overflow:hidden}
-
-.compare-bg{
-  position:absolute;inset:0;z-index:0;
-  background-color:#010810;
-  background-image:
-    /* concentric radar rings */
-    radial-gradient(circle at 50% 50%, transparent 8%, rgba(0,212,255,.04) 8.5%, transparent 9%),
-    radial-gradient(circle at 50% 50%, transparent 16%, rgba(0,212,255,.035) 16.5%, transparent 17%),
-    radial-gradient(circle at 50% 50%, transparent 24%, rgba(0,212,255,.03) 24.5%, transparent 25%),
-    radial-gradient(circle at 50% 50%, transparent 32%, rgba(0,212,255,.025) 32.5%, transparent 33%),
-    radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,212,255,.02) 40.5%, transparent 41%),
-    radial-gradient(circle at 50% 50%, transparent 48%, rgba(0,212,255,.015) 48.5%, transparent 49%),
-    /* crosshairs */
-    linear-gradient(90deg, transparent 49.9%, rgba(0,212,255,.05) 50%, transparent 50.1%),
-    linear-gradient(0deg, transparent 49.9%, rgba(0,212,255,.05) 50%, transparent 50.1%),
-    /* center glow */
-    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0,212,255,.06) 0%, transparent 60%),
-    /* red zone left */
-    radial-gradient(ellipse 40% 80% at 15% 50%, rgba(255,45,85,.05) 0%, transparent 70%),
-    /* cyan zone right */
-    radial-gradient(ellipse 40% 80% at 85% 50%, rgba(0,212,255,.06) 0%, transparent 70%);
-}
-
-.cmp-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 60px}
-.cmp-head{text-align:center;margin-bottom:80px}
-.cmp-grid{display:grid;grid-template-columns:1fr auto 1fr;background:rgba(2,5,10,.85);border:1px solid var(--border);backdrop-filter:blur(20px)}
-.cmp-col{padding:52px 48px}
-.cmp-col.bad{border-right:1px solid var(--border)}
-.cmp-col.gd{border-left:1px solid var(--border)}
-.cmp-sep{display:flex;align-items:center;justify-content:center;padding:0 28px;font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.2em;color:var(--hot)}
-.cmp-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:.08em;margin-bottom:36px}
-.cmp-title.bad{color:var(--red)}.cmp-title.gd{color:var(--cyan)}
-.cmp-item{display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;font-size:1rem;font-weight:300;line-height:1.5}
-.cmp-col.bad .cmp-item{color:var(--muted)}.cmp-col.gd .cmp-item{color:var(--text)}
-.ci{flex-shrink:0;margin-top:2px;font-size:13px}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   SOLUTIONS — PHOTOREALISTIC CARDS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.section-solutions{padding:0}
-
-.sol-heading-band{
-  position:relative;padding:100px 60px;text-align:center;overflow:hidden;
-  background:
-    radial-gradient(ellipse 80% 100% at 50% 100%, rgba(0,212,255,.08) 0%, transparent 70%),
-    var(--bg);
-}
-.sol-heading-band::before{
-  content:'';position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(0,212,255,.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,212,255,.05) 1px, transparent 1px);
-  background-size:60px 60px;
-  mask-image:radial-gradient(ellipse 70% 80% at 50% 50%, black, transparent);
-}
-
-.sol-cards{display:grid;grid-template-columns:repeat(3,1fr)}
-
-.sol-card{
-  position:relative;min-height:640px;display:flex;flex-direction:column;justify-content:flex-end;
-  padding:48px 40px;overflow:hidden;cursor:default;
-  transition:all .5s ease;
-}
-.sol-card:hover{flex-grow:1.02}
-
-/* Card 1: Real Estate — house at night aesthetic */
-.sol-card:nth-child(1){
-  background:
-    linear-gradient(to top, rgba(2,5,10,.98) 0%, rgba(2,5,10,.75) 40%, rgba(2,5,10,.3) 100%),
-    /* window lights grid pattern */
-    repeating-linear-gradient(90deg, transparent 0%, transparent 4%, rgba(255,200,80,.04) 4%, rgba(255,200,80,.04) 5%),
-    repeating-linear-gradient(0deg, transparent 0%, transparent 6%, rgba(255,200,80,.04) 6%, rgba(255,200,80,.04) 7%),
-    /* building silhouettes */
-    linear-gradient(180deg,
-      #020913 0%,
-      #020913 20%,
-      #0a1525 20%, #0a1525 21%,
-      #020913 21%,
-      #020913 28%,
-      #071220 28%, #071220 29%,
-      #020913 29%,
-      #020913 38%,
-      #0d1a2e 38%, #0d1a2e 39%,
-      #020913 39%,
-      #020913 45%,
-      #091524 45%
-    ),
-    /* warm amber glow from below */
-    radial-gradient(ellipse 100% 40% at 50% 100%, rgba(255,150,50,.12) 0%, rgba(255,100,0,.05) 40%, transparent 70%),
-    #020913;
-}
-
-/* Card 2: Local Services — emergency/work lights */
-.sol-card:nth-child(2){
-  background:
-    linear-gradient(to top, rgba(2,5,10,.98) 0%, rgba(2,5,10,.7) 40%, rgba(2,5,10,.2) 100%),
-    /* tool/grid pattern */
-    repeating-linear-gradient(45deg, transparent 0%, transparent 10px, rgba(0,212,255,.015) 10px, rgba(0,212,255,.015) 11px),
-    /* van/truck silhouette via gradients */
-    linear-gradient(180deg,
-      #010912 0%,
-      #010912 40%,
-      #081420 40%, #081420 55%,
-      #010912 55%,
-      #010912 62%,
-      #0c1928 62%, #0c1928 65%,
-      #010912 65%
-    ),
-    /* emergency blue flash */
-    radial-gradient(ellipse 60% 30% at 30% 50%, rgba(0,100,255,.08) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 25% at 70% 45%, rgba(255,50,50,.05) 0%, transparent 50%),
-    /* ground glow */
-    radial-gradient(ellipse 100% 35% at 50% 100%, rgba(0,212,255,.1) 0%, transparent 60%),
-    #010912;
-}
-
-/* Card 3: Law — courthouse marble aesthetic */
-.sol-card:nth-child(3){
-  background:
-    linear-gradient(to top, rgba(2,5,10,.98) 0%, rgba(2,5,10,.72) 40%, rgba(2,5,10,.25) 100%),
-    /* marble texture via layered gradients */
-    repeating-linear-gradient(105deg, transparent 0%, transparent 20px, rgba(255,255,255,.012) 20px, rgba(255,255,255,.012) 21px),
-    repeating-linear-gradient(75deg, transparent 0%, transparent 30px, rgba(255,255,255,.008) 30px, rgba(255,255,255,.008) 31px),
-    /* columns */
-    repeating-linear-gradient(90deg,
-      transparent 0%, transparent 7%,
-      rgba(200,210,230,.06) 7%, rgba(200,210,230,.06) 8%,
-      transparent 8%, transparent 14%,
-      rgba(200,210,230,.06) 14%, rgba(200,210,230,.06) 15%,
-      transparent 15%, transparent 21%,
-      rgba(200,210,230,.06) 21%, rgba(200,210,230,.06) 22%,
-      transparent 22%
-    ),
-    /* gold glow */
-    radial-gradient(ellipse 70% 40% at 50% 100%, rgba(255,184,0,.1) 0%, rgba(255,184,0,.03) 50%, transparent 70%),
-    radial-gradient(ellipse 50% 50% at 50% 30%, rgba(255,200,100,.04) 0%, transparent 60%),
-    #02080F;
-}
-
-.sol-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0;transition:opacity .4s;z-index:2}
-.sol-card:hover::before{opacity:1}
-
-/* Animated shimmer on hover */
-.sol-card::after{
-  content:'';position:absolute;inset:0;z-index:1;
-  background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,212,255,.06) 0%, transparent 60%);
-  opacity:0;transition:opacity .5s;
-}
-.sol-card:hover::after{opacity:1}
-
-.sol-card-content{position:relative;z-index:3}
-.sol-num-big{position:absolute;top:20px;right:24px;font-family:'Bebas Neue',sans-serif;font-size:10rem;line-height:1;color:rgba(0,212,255,.05);letter-spacing:-.02em;transition:color .4s;pointer-events:none;z-index:0}
-.sol-card:hover .sol-num-big{color:rgba(0,212,255,.1)}
-.sol-tag2{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;display:block}
-.sol-card h3{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:.04em;margin-bottom:16px;line-height:.95}
-.sol-card p{font-size:.9rem;color:var(--muted);line-height:1.65;font-weight:300;margin-bottom:24px}
-.sol-terms2{display:flex;flex-wrap:wrap;gap:8px}
-.s-term{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);border:1px solid var(--border);padding:4px 10px;transition:all .2s;letter-spacing:.05em}
-.sol-card:hover .s-term{border-color:var(--hot);color:var(--muted)}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   WHY — CIRCUIT BOARD TEXTURE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.section-why{position:relative;padding:140px 0;overflow:hidden}
-
-.why-bg{
-  position:absolute;inset:0;z-index:0;
-  background-color:#010912;
-  background-image:
-    /* circuit traces horizontal */
-    repeating-linear-gradient(0deg, transparent 0%, transparent 39px, rgba(0,212,255,.06) 39px, rgba(0,212,255,.06) 40px),
-    /* circuit traces vertical */
-    repeating-linear-gradient(90deg, transparent 0%, transparent 59px, rgba(0,212,255,.06) 59px, rgba(0,212,255,.06) 60px),
-    /* random via-points */
-    radial-gradient(circle at 20% 30%, rgba(0,212,255,.12) 0%, transparent 1%),
-    radial-gradient(circle at 60% 70%, rgba(0,212,255,.12) 0%, transparent 1%),
-    radial-gradient(circle at 80% 20%, rgba(0,212,255,.12) 0%, transparent 1%),
-    radial-gradient(circle at 40% 80%, rgba(0,212,255,.12) 0%, transparent 1%),
-    radial-gradient(circle at 15% 60%, rgba(0,212,255,.1) 0%, transparent 1%),
-    radial-gradient(circle at 75% 45%, rgba(0,212,255,.1) 0%, transparent 1%),
-    /* warm glow at center */
-    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,212,255,.04) 0%, transparent 70%);
-}
-
-.why-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 60px}
-.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:70px}
-.why-item{background:rgba(1,9,18,.92);padding:52px 48px;transition:background .3s;position:relative;overflow:hidden}
-.why-item:hover{background:rgba(4,14,30,.95)}
-.why-item::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 50% at 50% 100%,rgba(0,212,255,.05) 0%,transparent 70%);opacity:0;transition:opacity .4s}
-.why-item:hover::after{opacity:1}
-.why-icon{width:44px;height:44px;background:rgba(0,212,255,.08);border:1px solid var(--hot);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:24px}
-.why-item h3{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.05em;margin-bottom:14px}
-.why-item p{font-size:.92rem;color:var(--muted);line-height:1.7;font-weight:300}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   DATA — DARK TOPOGRAPHIC MAP
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.section-data{position:relative;padding:140px 0;overflow:hidden}
-
-.data-bg{
-  position:absolute;inset:0;z-index:0;
-  background-color:#020913;
-  background-image:
-    /* topographic contour lines */
-    radial-gradient(ellipse 120% 60% at 80% 50%, transparent 20%, rgba(0,212,255,.04) 21%, transparent 22%),
-    radial-gradient(ellipse 110% 55% at 80% 50%, transparent 28%, rgba(0,212,255,.035) 29%, transparent 30%),
-    radial-gradient(ellipse 100% 50% at 80% 50%, transparent 36%, rgba(0,212,255,.03) 37%, transparent 38%),
-    radial-gradient(ellipse 90% 45% at 80% 50%, transparent 44%, rgba(0,212,255,.025) 45%, transparent 46%),
-    radial-gradient(ellipse 80% 40% at 80% 50%, transparent 52%, rgba(0,212,255,.02) 53%, transparent 54%),
-    /* heat zones */
-    radial-gradient(ellipse 50% 60% at 85% 50%, rgba(0,212,255,.06) 0%, transparent 60%),
-    radial-gradient(ellipse 30% 40% at 90% 30%, rgba(0,255,178,.04) 0%, transparent 50%),
-    /* left fade */
-    linear-gradient(to right, rgba(2,5,10,1) 0%, rgba(2,5,10,.6) 40%, rgba(2,5,10,.2) 70%, transparent 100%);
-}
-
-.data-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 60px}
-.data-layout{display:grid;grid-template-columns:1fr 1.5fr;gap:80px;align-items:center}
-.data-list{margin-top:32px}
-.d-item{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--border);font-size:1rem;font-weight:300;line-height:1.5;transition:color .2s}
-.d-item:hover{color:var(--cyan)}
-.d-item::before{content:'→';font-family:'JetBrains Mono',monospace;color:var(--cyan);flex-shrink:0;font-size:12px;margin-top:3px}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   PROOF — AURORA / SPACE BACKGROUND
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.section-proof{position:relative;padding:160px 0;text-align:center;overflow:hidden}
-
-.proof-bg{
-  position:absolute;inset:0;z-index:0;
-  background-color:#010812;
-  background-image:
-    /* aurora bands */
-    radial-gradient(ellipse 100% 40% at 50% 60%, rgba(0,212,255,.12) 0%, rgba(0,212,255,.06) 30%, transparent 70%),
-    radial-gradient(ellipse 80% 30% at 30% 70%, rgba(0,100,255,.08) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 25% at 70% 65%, rgba(0,255,178,.06) 0%, transparent 55%),
-    /* stars */
     radial-gradient(1px 1px at 8% 12%, rgba(255,255,255,.8) 0%, transparent 100%),
     radial-gradient(1px 1px at 22% 6%, rgba(255,255,255,.6) 0%, transparent 100%),
     radial-gradient(1px 1px at 38% 18%, rgba(255,255,255,.7) 0%, transparent 100%),
-    radial-gradient(1px 1px at 52% 9%, rgba(255,255,255,.5) 0%, transparent 100%),
-    radial-gradient(1px 1px at 68% 14%, rgba(255,255,255,.8) 0%, transparent 100%),
-    radial-gradient(1px 1px at 84% 7%, rgba(255,255,255,.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 9%, rgba(255,255,255,.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 14%, rgba(255,255,255,.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 7%, rgba(255,255,255,.6) 0%, transparent 100%),
     radial-gradient(1px 1px at 14% 28%, rgba(255,255,255,.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 48% 32%, rgba(255,255,255,.3) 0%, transparent 100%),
     radial-gradient(1px 1px at 77% 22%, rgba(255,255,255,.5) 0%, transparent 100%),
-    radial-gradient(1px 1px at 46% 32%, rgba(255,255,255,.3) 0%, transparent 100%),
-    radial-gradient(1px 1px at 91% 30%, rgba(255,255,255,.6) 0%, transparent 100%),
-    /* dark vignette top+bottom */
-    linear-gradient(to bottom, rgba(1,8,18,.95) 0%, rgba(1,8,18,.4) 20%, transparent 40%, transparent 60%, rgba(1,8,18,.4) 80%, rgba(1,8,18,.98) 100%);
+    radial-gradient(1px 1px at 92% 38%, rgba(255,255,255,.6) 0%, transparent 100%),
+    radial-gradient(ellipse 100% 40% at 50% 100%, rgba(0,130,255,.2) 0%, rgba(0,212,255,.08) 40%, transparent 70%),
+    radial-gradient(ellipse 60% 60% at 80% 50%, rgba(0,212,255,.06) 0%, transparent 70%),
+    linear-gradient(to bottom, #020810 0%, #030C1A 100%);
 }
 
-.proof-inner{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:0 60px}
-.q-mark{font-family:'Bebas Neue',sans-serif;font-size:20rem;line-height:.5;color:rgba(0,212,255,.07);position:absolute;top:-40px;left:50%;transform:translateX(-50%);pointer-events:none}
-blockquote{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.5rem);letter-spacing:.02em;line-height:1.15;color:var(--text);position:relative;z-index:1;margin-bottom:32px}
-.q-auth{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.1em}
-.q-auth span{color:var(--cyan)}
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:80px}
-.stat{background:rgba(1,8,18,.88);padding:52px 32px;backdrop-filter:blur(10px);position:relative;overflow:hidden;transition:background .3s}
-.stat:hover{background:rgba(4,14,30,.92)}
-.stat::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0;transition:opacity .3s}
-.stat:hover::before{opacity:1}
-.stat-n{font-family:'Bebas Neue',sans-serif;font-size:5.5rem;letter-spacing:-.02em;line-height:1;background:linear-gradient(135deg,var(--cyan),var(--text));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
-.stat-d{font-size:.9rem;color:var(--muted);font-weight:300;line-height:1.55}
+.hero-grid {
+  position: absolute; inset: 0; z-index: 1;
+  background-image:
+    linear-gradient(rgba(0,212,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,.05) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse 80% 80% at 80% 50%, black 20%, transparent 80%);
+}
+
+#hero-canvas { position: absolute; inset: 0; z-index: 2; }
+
+.hero-vignette {
+  position: absolute; inset: 0; z-index: 3;
+  background: linear-gradient(to right, rgba(2,8,16,.95) 0%, rgba(2,8,16,.6) 45%, transparent 70%);
+}
+
+.hero-content { position: relative; z-index: 4; max-width: 740px; }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--cyan);
+  border: 1px solid var(--hot); padding: 9px 20px; margin-bottom: 36px;
+  background: rgba(0,212,255,.06); border-radius: 2px;
+}
+.blink { width: 7px; height: 7px; border-radius: 50%; background: var(--red); box-shadow: 0 0 8px var(--red); animation: blnk 1s steps(1) infinite; }
+@keyframes blnk { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(5rem, 11vw, 12rem);
+  line-height: .88; letter-spacing: -.01em; margin-bottom: 32px;
+}
+.hero-line-white { display: block; color: var(--white); }
+.hero-line-cyan {
+  display: block; color: var(--cyan);
+  text-shadow: 0 0 60px rgba(0,212,255,.7), 0 0 120px rgba(0,212,255,.3);
+}
+
+.hero-sub {
+  font-size: 1.4rem; font-weight: 500; color: var(--body);
+  max-width: 580px; line-height: 1.65; margin-bottom: 48px;
+}
+
+.hero-btns { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 52px; }
+
+.hero-trust { display: flex; gap: 32px; flex-wrap: wrap; }
+.trust-item {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  letter-spacing: .1em; color: var(--muted); display: flex; align-items: center; gap: 8px;
+  text-transform: uppercase;
+}
+.trust-item::before { content: '✓'; color: var(--cyan2); font-size: 12px; }
+
+/* scroll cue */
+.scroll-cue {
+  position: absolute; bottom: 40px; right: 60px; z-index: 4;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  letter-spacing: .2em; color: var(--muted); text-transform: uppercase;
+}
+.scroll-line { width: 1px; height: 56px; background: linear-gradient(to bottom, var(--cyan), transparent); animation: scrl 2s ease-in-out infinite; }
+@keyframes scrl { 0%,100%{opacity:.4;transform:scaleY(.7)} 50%{opacity:1;transform:scaleY(1)} }
+
+/* ── TICKER ── */
+.ticker-bar { position: relative; overflow: hidden; background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.ticker-label {
+  position: absolute; left: 0; top: 0; bottom: 0; z-index: 2;
+  display: flex; align-items: center; padding: 0 24px; gap: 8px;
+  background: var(--cyan); color: #000;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: .16em; text-transform: uppercase; font-weight: 600;
+}
+.ticker-dot { width: 5px; height: 5px; border-radius: 50%; background: #000; animation: blnk 1s steps(1) infinite; }
+.ticker-track { display: flex; animation: tick 36s linear infinite; width: max-content; padding-left: 148px; }
+@keyframes tick { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.tick-item {
+  display: flex; align-items: center; gap: 14px; padding: 15px 40px;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  white-space: nowrap; border-right: 1px solid var(--border);
+}
+.tq { color: var(--cyan); font-weight: 500; }
+.tc { color: var(--white); }
+.tt { color: var(--muted); }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   PRICING — DEEP SPACE / NEBULA
+   HOW IT WORKS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.section-pricing{position:relative;padding:140px 0;overflow:hidden}
-
-.pricing-bg{
-  position:absolute;inset:0;z-index:0;
-  background-color:#010810;
+.section-how {
+  position: relative; padding: 120px 0; overflow: hidden;
+  background: var(--bg);
+}
+.how-bg {
+  position: absolute; inset: 0;
   background-image:
-    /* nebula clouds */
-    radial-gradient(ellipse 60% 50% at 20% 40%, rgba(0,80,200,.08) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 60% at 80% 60%, rgba(0,180,255,.07) 0%, transparent 55%),
-    radial-gradient(ellipse 40% 40% at 50% 20%, rgba(100,0,200,.05) 0%, transparent 50%),
-    radial-gradient(ellipse 70% 30% at 60% 80%, rgba(0,212,255,.06) 0%, transparent 60%),
-    /* star field */
-    radial-gradient(1px 1px at 5% 15%, rgba(255,255,255,.7) 0%, transparent 100%),
-    radial-gradient(1px 1px at 18% 35%, rgba(255,255,255,.5) 0%, transparent 100%),
-    radial-gradient(1px 1px at 33% 8%, rgba(255,255,255,.6) 0%, transparent 100%),
-    radial-gradient(1px 1px at 48% 22%, rgba(255,255,255,.4) 0%, transparent 100%),
-    radial-gradient(1px 1px at 63% 45%, rgba(255,255,255,.7) 0%, transparent 100%),
-    radial-gradient(1px 1px at 78% 18%, rgba(255,255,255,.5) 0%, transparent 100%),
-    radial-gradient(1px 1px at 92% 38%, rgba(255,255,255,.6) 0%, transparent 100%),
-    radial-gradient(1px 1px at 25% 65%, rgba(255,255,255,.4) 0%, transparent 100%),
-    radial-gradient(1px 1px at 55% 72%, rgba(255,255,255,.3) 0%, transparent 100%),
-    radial-gradient(1px 1px at 87% 58%, rgba(255,255,255,.5) 0%, transparent 100%),
-    /* dark overlay */
-    linear-gradient(to bottom, rgba(1,8,16,.7) 0%, rgba(1,8,16,.4) 50%, rgba(1,8,16,.7) 100%);
+    linear-gradient(rgba(0,212,255,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,.055) 1px, transparent 1px),
+    linear-gradient(rgba(0,212,255,.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,.02) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 25px 25px, 25px 25px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 30%, transparent 100%);
 }
 
-.price-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 60px}
-.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:80px}
-.p-card{background:rgba(1,8,20,.82);border:1px solid var(--border);padding:48px 36px;position:relative;overflow:hidden;transition:all .4s;backdrop-filter:blur(12px)}
-.p-card.feat{border-color:var(--hot);box-shadow:0 0 60px rgba(0,212,255,.14)}
-.p-card:hover{transform:translateY(-6px)}
-.p-card.feat:hover{box-shadow:0 24px 80px rgba(0,212,255,.22)}
-.p-badge2{position:absolute;top:-1px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;background:var(--cyan);color:#000;padding:4px 22px;clip-path:polygon(8px 0%,calc(100% - 8px) 0%,100% 100%,0% 100%)}
-.p-tier{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}
-.p-card h3{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:.05em;margin-bottom:8px}
-.p-for{font-size:13px;color:var(--muted);font-weight:300;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--border)}
-.p-feats{list-style:none;margin-bottom:36px}
-.p-feats li{display:flex;gap:12px;align-items:flex-start;font-size:14px;font-weight:300;color:var(--text);margin-bottom:14px}
-.p-feats li::before{content:'╸';color:var(--cyan);flex-shrink:0;font-size:12px;margin-top:2px}
-.p-cta{display:block;text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:14px 24px;transition:all .3s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
-.p-cta.out{border:1px solid var(--hot);color:var(--cyan)}.p-cta.out:hover{background:rgba(0,212,255,.08);box-shadow:0 0 30px rgba(0,212,255,.15)}
-.p-cta.fil{background:var(--cyan);color:#000;box-shadow:0 0 30px var(--glow)}.p-cta.fil:hover{background:#fff;box-shadow:0 0 60px rgba(255,255,255,.4)}
+.how-intro { text-align: center; margin-bottom: 80px; }
+.how-intro .s-body { margin: 0 auto; font-size: 1.2rem; }
+
+.how-steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: var(--border); border: 1px solid var(--border); }
+
+.how-step {
+  background: var(--card); padding: 52px 44px;
+  position: relative; overflow: hidden; transition: background .3s;
+}
+.how-step:hover { background: #0D1E38; }
+.how-step::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0; transition: opacity .4s;
+}
+.how-step:hover::before { opacity: 1; }
+
+.step-num {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1rem;
+  letter-spacing: .2em; color: var(--cyan); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.step-num::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.step-icon {
+  width: 52px; height: 52px; background: rgba(0,212,255,.1);
+  border: 1px solid var(--hot); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 24px;
+}
+
+.how-step h3 {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem;
+  letter-spacing: .04em; color: var(--white); margin-bottom: 16px;
+}
+
+.how-step p { font-size: 1.1rem; color: var(--body); line-height: 1.7; font-weight: 500; }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   COMPARE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.section-compare {
+  position: relative; padding: 120px 0; overflow: hidden;
+  background: var(--bg2);
+}
+.compare-bg {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 50% 50%, transparent 8%, rgba(0,212,255,.03) 8.5%, transparent 9%),
+    radial-gradient(circle at 50% 50%, transparent 18%, rgba(0,212,255,.025) 18.5%, transparent 19%),
+    radial-gradient(circle at 50% 50%, transparent 28%, rgba(0,212,255,.02) 28.5%, transparent 29%),
+    radial-gradient(circle at 50% 50%, transparent 38%, rgba(0,212,255,.015) 38.5%, transparent 39%),
+    radial-gradient(circle at 50% 50%, transparent 48%, rgba(0,212,255,.01) 48.5%, transparent 49%),
+    radial-gradient(ellipse 40% 80% at 10% 50%, rgba(255,51,85,.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 80% at 90% 50%, rgba(0,212,255,.06) 0%, transparent 70%);
+}
+
+.compare-intro { text-align: center; margin-bottom: 72px; position: relative; z-index: 1; }
+
+.compare-grid {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  position: relative; z-index: 1;
+  background: rgba(6,14,26,.9);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+}
+.cmp-col { padding: 56px 52px; }
+.cmp-col.bad { border-right: 1px solid var(--border); }
+.cmp-divider {
+  display: flex; align-items: center; justify-content: center; padding: 0 32px;
+  font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem;
+  letter-spacing: .2em; color: var(--hot);
+}
+.cmp-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 2rem;
+  letter-spacing: .06em; margin-bottom: 36px;
+}
+.cmp-title.bad { color: var(--red); }
+.cmp-title.good { color: var(--cyan); }
+
+.cmp-item {
+  display: flex; gap: 16px; align-items: flex-start;
+  margin-bottom: 22px; font-size: 1.15rem; line-height: 1.6; font-weight: 500;
+}
+.cmp-col.bad .cmp-item { color: var(--body); }
+.cmp-col.good .cmp-item { color: var(--white); }
+.cmp-icon { flex-shrink: 0; margin-top: 3px; font-size: 15px; }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SOLUTIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.section-solutions { background: var(--bg); padding: 0; }
+
+.sol-header {
+  padding: 120px 52px 80px;
+  text-align: center;
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 100% at 50% 100%, rgba(0,212,255,.07) 0%, transparent 70%),
+    var(--bg);
+}
+.sol-header::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,212,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+}
+.sol-header .s-body { margin: 0 auto; }
+
+.sol-grid { display: grid; grid-template-columns: repeat(4,1fr); }
+
+.sol-card {
+  position: relative; min-height: 620px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 52px 44px; overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  transition: all .4s;
+}
+.sol-card:last-child { border-right: none; }
+.sol-card:hover { background: rgba(10,22,40,.6); }
+
+/* unique backgrounds per card */
+.sol-card:nth-child(1) {
+  background:
+    linear-gradient(to top, rgba(3,8,15,.98) 0%, rgba(3,8,15,.8) 45%, rgba(3,8,15,.4) 100%),
+    repeating-linear-gradient(90deg, transparent 0%, transparent 4%, rgba(255,200,80,.03) 4%, rgba(255,200,80,.03) 5%),
+    repeating-linear-gradient(0deg, transparent 0%, transparent 7%, rgba(255,200,80,.03) 7%, rgba(255,200,80,.03) 8%),
+    radial-gradient(ellipse 100% 50% at 50% 100%, rgba(255,140,40,.12) 0%, transparent 70%),
+    #030810;
+}
+.sol-card:nth-child(2) {
+  background:
+    linear-gradient(to top, rgba(3,8,15,.98) 0%, rgba(3,8,15,.8) 45%, rgba(3,8,15,.4) 100%),
+    repeating-linear-gradient(45deg, transparent 0%, transparent 12px, rgba(0,212,255,.015) 12px, rgba(0,212,255,.015) 13px),
+    radial-gradient(ellipse 80% 40% at 50% 100%, rgba(0,212,255,.12) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 30% at 25% 50%, rgba(0,80,255,.07) 0%, transparent 60%),
+    #030810;
+}
+.sol-card:nth-child(3) {
+  background:
+    linear-gradient(to top, rgba(3,8,15,.98) 0%, rgba(3,8,15,.8) 45%, rgba(3,8,15,.4) 100%),
+    repeating-linear-gradient(105deg, transparent 0%, transparent 22px, rgba(255,255,255,.01) 22px, rgba(255,255,255,.01) 23px),
+    repeating-linear-gradient(90deg, transparent 0%, transparent 8%, rgba(210,220,240,.04) 8%, rgba(210,220,240,.04) 9%, transparent 9%),
+    radial-gradient(ellipse 70% 40% at 50% 100%, rgba(255,184,0,.1) 0%, transparent 65%),
+    #030810;
+}
+
+.sol-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0; transition: opacity .4s;
+}
+.sol-card:hover::before { opacity: 1; }
+
+.sol-bg-num {
+  position: absolute; top: 20px; right: 24px;
+  font-family: 'Bebas Neue', sans-serif; font-size: 9rem; line-height: 1;
+  color: rgba(0,212,255,.05); pointer-events: none;
+  transition: color .4s;
+}
+.sol-card:hover .sol-bg-num { color: rgba(0,212,255,.09); }
+
+.sol-content { position: relative; z-index: 1; }
+
+.sol-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--cyan);
+  margin-bottom: 14px; display: block;
+}
+.sol-card h3 {
+  font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem;
+  letter-spacing: .03em; line-height: .95; color: var(--white); margin-bottom: 20px;
+}
+.sol-card p { font-size: 1.1rem; color: var(--body); line-height: 1.7; margin-bottom: 28px; font-weight: 500; }
+.sol-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.sol-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--muted); border: 1px solid var(--border); padding: 5px 12px;
+  border-radius: 3px; transition: all .2s; letter-spacing: .05em;
+}
+.sol-card:hover .sol-tag { border-color: var(--hot); color: var(--body); }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   WHY SECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.section-why {
+  position: relative; padding: 120px 0; overflow: hidden;
+  background: var(--bg2);
+}
+.why-bg {
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0%, transparent 39px, rgba(0,212,255,.05) 39px, rgba(0,212,255,.05) 40px),
+    repeating-linear-gradient(90deg, transparent 0%, transparent 59px, rgba(0,212,255,.05) 59px, rgba(0,212,255,.05) 60px),
+    radial-gradient(circle at 25% 35%, rgba(0,212,255,.1) 0%, transparent 1.2%),
+    radial-gradient(circle at 75% 65%, rgba(0,212,255,.1) 0%, transparent 1.2%),
+    radial-gradient(circle at 50% 20%, rgba(0,212,255,.08) 0%, transparent 1%),
+    radial-gradient(circle at 15% 75%, rgba(0,212,255,.08) 0%, transparent 1%),
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,212,255,.04) 0%, transparent 70%);
+}
+
+.why-intro { text-align: center; margin-bottom: 72px; position: relative; z-index: 1; }
+.why-intro .s-body { margin: 0 auto; }
+
+.why-grid {
+  display: grid; grid-template-columns: repeat(2,1fr); gap: 2px;
+  background: var(--border); border: 1px solid var(--border);
+  position: relative; z-index: 1;
+}
+.why-item {
+  background: rgba(6,14,26,.9); padding: 56px 52px;
+  transition: background .3s; position: relative; overflow: hidden;
+}
+.why-item:hover { background: rgba(10,22,40,.95); }
+.why-item::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 50% 50% at 50% 100%, rgba(0,212,255,.05) 0%, transparent 70%);
+  opacity: 0; transition: opacity .4s;
+}
+.why-item:hover::after { opacity: 1; }
+.why-icon {
+  width: 52px; height: 52px; background: rgba(0,212,255,.1);
+  border: 1px solid var(--hot); display: flex; align-items: center;
+  justify-content: center; font-size: 22px; margin-bottom: 28px; border-radius: 10px;
+}
+.why-item h3 {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem;
+  letter-spacing: .04em; color: var(--white); margin-bottom: 16px;
+}
+.why-item p { font-size: 1.1rem; color: var(--body); line-height: 1.7; font-weight: 500; }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DATA SECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.section-data {
+  position: relative; padding: 120px 0; overflow: hidden;
+  background: var(--bg);
+}
+.data-bg {
+  position: absolute; right: 0; top: 0; bottom: 0; width: 55%;
+  background-image:
+    radial-gradient(ellipse 120% 60% at 100% 50%, transparent 22%, rgba(0,212,255,.04) 23%, transparent 24%),
+    radial-gradient(ellipse 110% 55% at 100% 50%, transparent 32%, rgba(0,212,255,.035) 33%, transparent 34%),
+    radial-gradient(ellipse 100% 50% at 100% 50%, transparent 42%, rgba(0,212,255,.03) 43%, transparent 44%),
+    radial-gradient(ellipse 90% 45% at 100% 50%, transparent 52%, rgba(0,212,255,.025) 53%, transparent 54%),
+    radial-gradient(ellipse 60% 60% at 100% 50%, rgba(0,212,255,.07) 0%, transparent 60%);
+}
+
+.data-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: center; position: relative; z-index: 1; }
+
+.data-list { margin-top: 36px; }
+.data-item {
+  display: flex; gap: 18px; align-items: flex-start;
+  padding: 18px 0; border-bottom: 1px solid var(--border);
+  font-size: 1.1rem; color: var(--body); line-height: 1.6; font-weight: 500; transition: color .2s;
+}
+.data-item:hover { color: var(--white); }
+.data-item::before { content: '→'; font-family: 'JetBrains Mono', monospace; color: var(--cyan); flex-shrink: 0; font-size: 13px; margin-top: 3px; }
+
+/* Terminal */
+.terminal {
+  background: #000;
+  border: 1px solid rgba(0,212,255,.2);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(0,212,255,.14), 0 24px 60px rgba(0,0,0,.6);
+}
+.term-bar {
+  display: flex; align-items: center; gap: 8px; padding: 13px 20px;
+  background: #0A0A0A; border-bottom: 1px solid rgba(0,212,255,.08);
+}
+.term-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: .1em; flex: 1; text-align: center; }
+.dr { width: 11px; height: 11px; border-radius: 50%; background: #FF5F57; }
+.dy { width: 11px; height: 11px; border-radius: 50%; background: #FFBD2E; }
+.dg { width: 11px; height: 11px; border-radius: 50%; background: #28C840; }
+
+.term-table { width: 100%; border-collapse: collapse; }
+.term-table th {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+  padding: 14px 18px; text-align: left;
+  background: #050505; border-bottom: 1px solid rgba(0,212,255,.07);
+}
+.term-table td {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  padding: 14px 18px; border-bottom: 1px solid rgba(0,212,255,.05);
+  color: var(--text);
+}
+.term-table tr:hover td { background: rgba(0,212,255,.03); }
+.term-table tr:last-child td { border-bottom: none; }
+.blr { filter: blur(5px); color: var(--muted) !important; }
+.tag-c { background: rgba(0,212,255,.12); border: 1px solid rgba(0,212,255,.22); color: var(--cyan); padding: 3px 10px; font-size: 10px; border-radius: 3px; }
+.tag-g { background: rgba(0,255,178,.1); border: 1px solid rgba(0,255,178,.22); color: var(--cyan2); padding: 3px 10px; font-size: 10px; border-radius: 3px; }
+.term-footer { padding: 12px 18px; border-top: 1px solid rgba(0,212,255,.06); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); letter-spacing: .08em; }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PROOF / TESTIMONIAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.section-proof {
+  position: relative; padding: 140px 0; text-align: center; overflow: hidden;
+  background: var(--bg2);
+}
+.proof-bg {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(ellipse 90% 50% at 50% 70%, rgba(0,212,255,.1) 0%, rgba(0,212,255,.05) 30%, transparent 65%),
+    radial-gradient(ellipse 70% 35% at 30% 70%, rgba(0,80,255,.07) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 30% at 70% 65%, rgba(0,255,178,.05) 0%, transparent 50%),
+    radial-gradient(1px 1px at 8% 10%, rgba(255,255,255,.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 5%, rgba(255,255,255,.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 42% 15%, rgba(255,255,255,.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 58% 8%, rgba(255,255,255,.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 12%, rgba(255,255,255,.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 6%, rgba(255,255,255,.5) 0%, transparent 100%),
+    linear-gradient(to bottom, rgba(6,14,26,.9) 0%, rgba(6,14,26,.5) 30%, rgba(6,14,26,.5) 70%, rgba(6,14,26,.9) 100%);
+}
+
+.proof-inner { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+
+.quote-mark {
+  font-family: 'Bebas Neue', sans-serif; font-size: 18rem; line-height: .5;
+  color: rgba(0,212,255,.07); position: absolute; top: -30px; left: 50%;
+  transform: translateX(-50%); pointer-events: none;
+}
+
+blockquote {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  letter-spacing: .02em; line-height: 1.2; color: var(--white);
+  position: relative; z-index: 1; margin-bottom: 36px;
+}
+
+.q-author { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); letter-spacing: .1em; }
+.q-author span { color: var(--cyan); }
+
+.stats-row {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 2px;
+  background: var(--border); border: 1px solid var(--border); margin-top: 80px;
+}
+.stat-box {
+  background: rgba(6,14,26,.85); padding: 56px 36px;
+  backdrop-filter: blur(10px); position: relative; overflow: hidden; transition: background .3s;
+}
+.stat-box:hover { background: rgba(10,22,40,.9); }
+.stat-box::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg,transparent,var(--cyan),transparent); opacity: 0; transition: opacity .3s; }
+.stat-box:hover::before { opacity: 1; }
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif; font-size: 5.5rem;
+  letter-spacing: -.02em; line-height: 1;
+  background: linear-gradient(135deg, var(--cyan), var(--white));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 14px;
+}
+.stat-desc { font-size: 1rem; color: var(--body); line-height: 1.6; font-weight: 400; }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PRICING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.section-pricing {
+  position: relative; padding: 120px 0; overflow: hidden;
+  background: var(--bg);
+}
+.pricing-bg {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(ellipse 60% 50% at 20% 40%, rgba(0,60,180,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 60%, rgba(0,180,255,.06) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 50% 20%, rgba(80,0,180,.05) 0%, transparent 50%),
+    radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 35% 40%, rgba(255,255,255,.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 15%, rgba(255,255,255,.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 35%, rgba(255,255,255,.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 25%, rgba(255,255,255,.4) 0%, transparent 100%);
+}
+
+.pricing-intro { text-align: center; margin-bottom: 72px; position: relative; z-index: 1; }
+.pricing-intro .s-body { margin: 0 auto; }
+
+.price-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; position: relative; z-index: 1; }
+
+.price-card {
+  background: rgba(6,14,26,.88); border: 1px solid var(--border);
+  padding: 52px 40px; position: relative; overflow: hidden;
+  transition: all .4s; backdrop-filter: blur(10px); border-radius: 6px;
+}
+.price-card.featured { border-color: var(--hot); box-shadow: 0 0 60px rgba(0,212,255,.14); }
+.price-card:hover { transform: translateY(-6px); }
+.price-card.featured:hover { box-shadow: 0 24px 80px rgba(0,212,255,.2); }
+
+.price-badge {
+  position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase;
+  background: var(--cyan); color: #000; padding: 5px 24px; border-radius: 0 0 6px 6px;
+}
+.price-tier { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); margin-bottom: 12px; }
+.price-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: .04em; color: var(--white); margin-bottom: 8px; }
+.price-amount { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; letter-spacing: .02em; color: var(--cyan); line-height: 1; margin-bottom: 8px; }
+.price-amount span { font-size: 1.4rem; color: var(--muted); letter-spacing: .05em; }
+.price-for { font-size: 1rem; color: var(--body); margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); line-height: 1.6; }
+.price-features { list-style: none; margin-bottom: 36px; }
+.price-features li { display: flex; gap: 12px; align-items: flex-start; font-size: 1.1rem; font-weight: 500; color: var(--text); margin-bottom: 14px; line-height: 1.5; }
+.price-features li::before { content: '→'; color: var(--cyan); flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; margin-top: 2px; }
+
+.price-cta {
+  display: block; text-align: center;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  letter-spacing: .04em; text-decoration: none; padding: 15px 24px;
+  border-radius: 4px; transition: all .3s;
+}
+.price-cta.out { border: 1px solid var(--hot); color: var(--cyan); }
+.price-cta.out:hover { background: rgba(0,212,255,.1); }
+.price-cta.fil { background: var(--cyan); color: #000; box-shadow: 0 0 28px var(--glow); }
+.price-cta.fil:hover { background: #fff; box-shadow: 0 0 50px rgba(255,255,255,.4); }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    FAQ
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.section-faq{position:relative;padding:120px 0;background:var(--bg)}
-.faq-inner{max-width:1200px;margin:0 auto;padding:0 60px}
-.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-top:70px}
-.faq-item{background:var(--bg);padding:36px 42px;transition:background .3s}
-.faq-item:hover{background:rgba(4,12,28,.98)}
-.faq-item h4{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.05em;margin-bottom:12px}
-.faq-item p{font-size:.9rem;color:var(--muted);line-height:1.7;font-weight:300}
+.section-faq { padding: 120px 0; background: var(--bg2); }
+.faq-intro { text-align: center; margin-bottom: 72px; }
+.faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); border: 1px solid var(--border); }
+.faq-item { background: var(--bg2); padding: 40px 48px; transition: background .3s; }
+.faq-item:hover { background: rgba(10,22,40,.98); }
+.faq-item h4 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: .04em; color: var(--white); margin-bottom: 14px; }
+.faq-item p { font-size: 1.1rem; color: var(--body); line-height: 1.7; font-weight: 500; }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   FINAL CTA — CITY FROM ABOVE, NIGHT
+   FINAL CTA
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-.section-final{position:relative;padding:220px 0;text-align:center;overflow:hidden}
-
-.final-bg{
-  position:absolute;inset:0;z-index:0;
-  background-color:#010912;
-  animation:bgBreath 8s ease-in-out infinite alternate;
+.section-final {
+  position: relative; padding: 180px 0; text-align: center; overflow: hidden;
+  background: var(--bg);
+}
+.final-bg {
+  position: absolute; inset: 0;
   background-image:
-    /* city grid lights from above */
-    repeating-linear-gradient(0deg,   transparent 0%, transparent 29px, rgba(255,200,100,.025) 29px, rgba(255,200,100,.025) 30px),
-    repeating-linear-gradient(90deg,  transparent 0%, transparent 29px, rgba(255,200,100,.025) 29px, rgba(255,200,100,.025) 30px),
-    /* diagonal boulevard lines */
-    repeating-linear-gradient(45deg,  transparent 0%, transparent 59px, rgba(0,212,255,.04) 59px, rgba(0,212,255,.04) 61px),
-    repeating-linear-gradient(-45deg, transparent 0%, transparent 59px, rgba(0,212,255,.03) 59px, rgba(0,212,255,.03) 61px),
-    /* glow pools at intersections */
-    radial-gradient(ellipse 20% 15% at 20% 30%, rgba(255,200,50,.06) 0%, transparent 70%),
-    radial-gradient(ellipse 15% 12% at 50% 55%, rgba(255,200,50,.06) 0%, transparent 70%),
-    radial-gradient(ellipse 18% 13% at 80% 25%, rgba(255,200,50,.06) 0%, transparent 70%),
-    radial-gradient(ellipse 12% 10% at 35% 75%, rgba(255,200,50,.05) 0%, transparent 70%),
-    radial-gradient(ellipse 14% 11% at 65% 40%, rgba(255,200,50,.05) 0%, transparent 70%),
-    /* big center glow */
+    repeating-linear-gradient(0deg, transparent 0%, transparent 29px, rgba(255,200,100,.022) 29px, rgba(255,200,100,.022) 30px),
+    repeating-linear-gradient(90deg, transparent 0%, transparent 29px, rgba(255,200,100,.022) 29px, rgba(255,200,100,.022) 30px),
+    repeating-linear-gradient(45deg, transparent 0%, transparent 59px, rgba(0,212,255,.035) 59px, rgba(0,212,255,.035) 61px),
+    repeating-linear-gradient(-45deg, transparent 0%, transparent 59px, rgba(0,212,255,.025) 59px, rgba(0,212,255,.025) 61px),
+    radial-gradient(ellipse 20% 15% at 20% 30%, rgba(255,200,50,.055) 0%, transparent 70%),
+    radial-gradient(ellipse 15% 12% at 50% 55%, rgba(255,200,50,.055) 0%, transparent 70%),
+    radial-gradient(ellipse 18% 13% at 80% 25%, rgba(255,200,50,.055) 0%, transparent 70%),
     radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,212,255,.1) 0%, transparent 65%),
-    /* vignette */
-    linear-gradient(to bottom, rgba(1,9,18,.98) 0%, rgba(1,9,18,.5) 20%, rgba(1,9,18,.2) 50%, rgba(1,9,18,.5) 80%, rgba(1,9,18,.98) 100%);
+    linear-gradient(to bottom, rgba(3,8,15,.97) 0%, rgba(3,8,15,.5) 20%, rgba(3,8,15,.2) 50%, rgba(3,8,15,.5) 80%, rgba(3,8,15,.97) 100%);
+  animation: bgBreathe 8s ease-in-out infinite alternate;
+}
+@keyframes bgBreathe { from{filter:brightness(1)} to{filter:brightness(1.12)} }
+.final-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 900px; height: 500px; background: radial-gradient(ellipse, rgba(0,212,255,.1) 0%, transparent 65%); z-index: 1; pointer-events: none; }
+.final-grid { position: absolute; inset: 0; z-index: 1; background-image: linear-gradient(rgba(0,212,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.045) 1px,transparent 1px); background-size: 80px 80px; mask-image: radial-gradient(ellipse 65% 65% at 50% 50%,black,transparent); }
+.final-inner { position: relative; z-index: 2; max-width: 920px; margin: 0 auto; padding: 0 52px; }
+.final-h {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 9vw, 9rem);
+  line-height: .92; letter-spacing: .01em;
+  background: linear-gradient(135deg, #FFFFFF 20%, var(--cyan) 55%, #FFFFFF 90%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 24px;
+}
+.final-sub { font-size: 1.3rem; color: var(--body); max-width: 500px; margin: 0 auto 52px; }
+.final-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* ── FOOTER ── */
+footer { background: rgba(2,6,14,.99); border-top: 1px solid var(--border); padding: 72px 52px 36px; }
+.foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+.foot-logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: .12em; text-decoration: none; color: var(--white); display: block; margin-bottom: 16px; }
+.foot-logo em { font-style: normal; color: var(--cyan); text-shadow: 0 0 20px var(--glow); }
+.foot-desc { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 280px; }
+.foot-col h5 { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+.foot-col ul { list-style: none; }
+.foot-col li { margin-bottom: 12px; }
+.foot-col a { font-size: 15px; color: var(--dim); text-decoration: none; transition: color .2s; }
+.foot-col a:hover { color: var(--cyan); }
+.foot-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 32px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); letter-spacing: .1em; }
+
+/* ── AGENCY RESELLER ── */
+.section-agency {
+  position: relative; padding: 120px 0; overflow: hidden;
+  background: var(--bg);
+}
+.agency-bg {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(ellipse 60% 80% at 100% 50%, rgba(0,212,255,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 80% 20%, rgba(0,255,178,.04) 0%, transparent 50%),
+    repeating-linear-gradient(135deg, transparent 0%, transparent 40px, rgba(0,212,255,.02) 40px, rgba(0,212,255,.02) 41px);
+}
+.agency-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; position: relative; z-index: 1; }
+.agency-points { display: flex; flex-direction: column; gap: 32px; margin-top: 40px; }
+.agency-point { display: flex; gap: 20px; align-items: flex-start; }
+.ap-icon { width: 44px; height: 44px; background: rgba(0,212,255,.1); border: 1px solid var(--hot); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.agency-point strong { display: block; font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+.agency-point p { font-size: .95rem; color: var(--body); line-height: 1.7; margin: 0; }
+
+.agency-card { background: rgba(6,14,26,.9); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; box-shadow: 0 0 60px rgba(0,212,255,.1); }
+.ac-header { padding: 20px 28px; background: rgba(0,212,255,.06); border-bottom: 1px solid var(--border); }
+.ac-body { padding: 8px 0; }
+.ac-row { display: grid; grid-template-columns: 1.4fr 1.4fr auto; gap: 12px; align-items: center; padding: 18px 28px; border-bottom: 1px solid var(--border); transition: background .2s; }
+.ac-row:hover { background: rgba(0,212,255,.04); }
+.ac-client { font-size: 15px; font-weight: 600; color: var(--white); }
+.ac-detail { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: .04em; }
+.ac-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: .04em; color: var(--cyan); text-align: right; white-space: nowrap; }
+.ac-total { display: flex; justify-content: space-between; align-items: center; padding: 20px 28px; background: rgba(0,212,255,.06); }
+.ac-total span:first-child { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: .08em; }
+.ac-total-num { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: .04em; background: linear-gradient(135deg, var(--cyan), var(--cyan2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+/* ── PPC + META SECTION ── */
+.section-ppc {
+  position: relative; padding: 130px 0; overflow: hidden;
+  background: var(--bg2);
+}
+.ppc-bg {
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0%, transparent 39px, rgba(0,212,255,.04) 39px, rgba(0,212,255,.04) 40px),
+    repeating-linear-gradient(90deg, transparent 0%, transparent 59px, rgba(0,212,255,.04) 59px, rgba(0,212,255,.04) 60px),
+    radial-gradient(circle at 20% 50%, rgba(0,212,255,.1) 0%, transparent 1.5%),
+    radial-gradient(circle at 80% 30%, rgba(0,212,255,.08) 0%, transparent 1.5%),
+    radial-gradient(circle at 50% 80%, rgba(255,184,0,.06) 0%, transparent 1.2%),
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,212,255,.04) 0%, transparent 70%);
+}
+.ppc-glow {
+  position: absolute; top: 30%; left: 50%; transform: translate(-50%,-50%);
+  width: 1000px; height: 600px;
+  background: radial-gradient(ellipse, rgba(0,212,255,.07) 0%, transparent 65%);
+  pointer-events: none;
 }
 
-@keyframes bgBreath{
-  from{filter:brightness(1)}
-  to{filter:brightness(1.15)}
+/* hero statement */
+.ppc-hero { text-align: center; margin-bottom: 80px; position: relative; z-index: 1; }
+.ppc-hero .s-body { font-size: 1.3rem; }
+
+/* platform cards */
+.ppc-platforms {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  margin-bottom: 40px; position: relative; z-index: 1;
+}
+.ppc-platform-card {
+  background: rgba(4,12,26,.9); border: 1px solid var(--border);
+  padding: 48px 44px; position: relative; overflow: hidden;
+  transition: all .4s;
+}
+.ppc-platform-card:hover { background: rgba(8,18,36,.95); }
+.ppc-platform-card.featured {
+  border-color: rgba(255,184,0,.35);
+  box-shadow: 0 0 60px rgba(255,184,0,.08);
+}
+.ppc-platform-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0; transition: opacity .4s;
+}
+.ppc-platform-card.featured::before {
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 1;
+}
+.ppc-platform-card:hover::before { opacity: 1; }
+
+.ppc-plat-icon {
+  width: 52px; height: 52px; background: rgba(0,212,255,.1);
+  border: 1px solid var(--hot); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+}
+.ppc-plat-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--cyan);
+  margin-bottom: 14px; display: block;
+}
+.ppc-plat-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem;
+  letter-spacing: .04em; line-height: .95; color: var(--white);
+  margin-bottom: 18px;
+}
+.ppc-plat-body {
+  font-size: 1.1rem; font-weight: 500; color: var(--body);
+  line-height: 1.7; margin-bottom: 28px;
+}
+.ppc-plat-stat {
+  display: flex; align-items: center; gap: 18px;
+  background: rgba(0,212,255,.05); border: 1px solid rgba(0,212,255,.15);
+  padding: 18px 22px;
+}
+.pps-num {
+  font-family: 'Bebas Neue', sans-serif; font-size: 3rem;
+  letter-spacing: .02em; color: var(--cyan); line-height: 1; flex-shrink: 0;
+}
+.pps-label { font-size: 1rem; font-weight: 500; color: var(--body); line-height: 1.5; }
+
+/* readiness callout */
+.ppc-readiness {
+  background: rgba(2,6,14,.95); border: 1px solid var(--hot);
+  box-shadow: 0 0 60px rgba(0,212,255,.08);
+  margin-bottom: 60px; position: relative; z-index: 1;
+}
+.ppc-ready-inner {
+  display: grid; grid-template-columns: 1.4fr 1fr; gap: 0;
+}
+.ppc-ready-left {
+  display: flex; gap: 24px; padding: 44px 48px;
+  border-right: 1px solid var(--border); align-items: flex-start;
+}
+.ppr-icon {
+  font-size: 2.5rem; flex-shrink: 0; line-height: 1;
+  filter: drop-shadow(0 0 16px rgba(0,212,255,.6));
+}
+.ppr-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 2rem;
+  letter-spacing: .04em; color: var(--white); margin-bottom: 14px;
+}
+.ppr-body { font-size: 1.05rem; font-weight: 500; color: var(--body); line-height: 1.7; }
+.ppc-ready-checks { padding: 44px 48px; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+.prc-item {
+  display: flex; align-items: center; gap: 14px;
+  font-size: 1.05rem; font-weight: 600; color: var(--white);
+}
+.prc-icon { font-size: 14px; color: var(--cyan2); flex-shrink: 0; font-family: 'JetBrains Mono', monospace; }
+
+/* flow comparison */
+.ppc-flow-wrap {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  gap: 0; position: relative; z-index: 1;
+  border: 1px solid var(--border); background: rgba(4,12,26,.9);
+}
+.pfc-divider {
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 28px; font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem; letter-spacing: .2em; color: var(--hot);
+  border-left: 1px solid var(--border); border-right: 1px solid var(--border);
+}
+.ppc-flow-col { padding: 44px 40px; }
+.pfc-head {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: .18em; text-transform: uppercase; margin-bottom: 28px; display: block;
+}
+.pfc-head.bad { color: var(--red); }
+.pfc-head.good { color: var(--cyan); }
+.pfc-step {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 16px 0; border-bottom: 1px solid var(--border);
+}
+.pfc-step:last-child { border-bottom: none; }
+.pfc-step strong { display: block; font-size: 1.05rem; font-weight: 700; color: var(--muted); margin-bottom: 4px; }
+.pfc-step.good strong { color: var(--white); }
+.pfc-step span { font-size: .95rem; font-weight: 500; color: var(--dim); }
+.pfc-step.good span { color: var(--body); }
+.pfc-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; opacity: .4; }
+.pfc-step.good .pfc-icon { opacity: 1; }
+.pfc-arrow {
+  font-family: 'JetBrains Mono', monospace; font-size: 14px;
+  color: var(--dim); padding: 8px 0; display: block; text-align: center;
 }
 
-.final-grid{position:absolute;inset:0;z-index:1;background-image:linear-gradient(rgba(0,212,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.05) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent)}
-.final-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:1000px;height:600px;background:radial-gradient(ellipse,rgba(0,212,255,.12) 0%,transparent 65%);z-index:2;pointer-events:none}
+/* old stat bar kept for compat */
+.ppc-layout { display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: start; position: relative; z-index: 1; }
+.ppc-card-wrap { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; align-items: center; margin-bottom: 24px; }
+.ppc-vs { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: .2em; color: var(--hot); padding: 0 20px; text-align: center; }
+.ppc-headline-card { background: rgba(6,14,26,.9); border: 1px solid var(--border); padding: 28px; height: 100%; }
+.ppc-headline-card.good { border-color: var(--hot); box-shadow: 0 0 40px rgba(0,212,255,.1); }
+.phc-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--red); margin-bottom: 22px; display: block; }
+.phc-flow { display: flex; flex-direction: column; gap: 0; }
+.phc-step { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.phc-step:last-child { border-bottom: none; }
+.phc-step strong { display: block; font-size: 1rem; font-weight: 700; color: var(--muted); margin-bottom: 3px; }
+.phc-step.good strong { color: var(--white); }
+.phc-step span { font-size: .9rem; color: var(--dim); font-weight: 500; }
+.phc-step.good span { color: var(--body); }
+.phc-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; opacity: .5; }
+.phc-step.good .phc-icon { opacity: 1; }
+.phc-arrow { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--dim); text-align: center; padding: 6px 0; display: block; }
+.ppc-stat-bar { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; background: rgba(0,212,255,.05); border: 1px solid var(--hot); padding: 28px 20px; align-items: center; }
+.psb-item { text-align: center; padding: 0 12px; }
+.psb-num { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: .04em; background: linear-gradient(135deg, var(--cyan), var(--white)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 8px; }
+.psb-label { font-size: 1rem; color: var(--body); font-weight: 500; line-height: 1.4; }
+.psb-div { width: 1px; height: 60px; background: var(--border); }
 
-.final-inner{position:relative;z-index:3;max-width:1000px;margin:0 auto;padding:0 60px}
-.final-inner .s-head{font-size:clamp(4rem,9vw,9rem);background:linear-gradient(135deg,#E8F4FF 20%,var(--cyan) 55%,#E8F4FF 90%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;margin-bottom:20px}
-.final-inner .s-sub{margin:0 auto 52px;text-align:center;font-size:1.25rem;max-width:520px;color:var(--muted);font-weight:300}
-.final-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+/* ── SCROLL REVEAL ── */
+.js-ready .rv { opacity: 0; transform: translateY(36px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+.js-ready .rv.in { opacity: 1; transform: translateY(0); }
+.js-ready .rv-l { opacity: 0; transform: translateX(-36px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+.js-ready .rv-l.in { opacity: 1; transform: translateX(0); }
+.js-ready .rv-r { opacity: 0; transform: translateX(36px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+.js-ready .rv-r.in { opacity: 1; transform: translateX(0); }
 
-/* FOOTER */
-footer{background:rgba(1,5,12,.99);border-top:1px solid var(--border);padding:72px 80px 36px}
-.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:60px}
-.foot-logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.12em;text-decoration:none;color:var(--text);display:block;margin-bottom:16px}
-.foot-logo em{font-style:normal;color:var(--cyan);text-shadow:0 0 20px var(--glow)}
-.foot-brand p{font-size:13px;color:var(--muted);line-height:1.7;font-weight:300;max-width:260px}
-.foot-col h5{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
-.foot-col ul{list-style:none}.foot-col li{margin-bottom:12px}
-.foot-col a{font-size:14px;color:var(--dim);text-decoration:none;transition:color .2s;font-weight:300}.foot-col a:hover{color:var(--cyan)}
-.foot-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:32px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--dim);letter-spacing:.1em}
-
-/* REVEAL */
-.rv{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
-.rv.in{opacity:1;transform:translateY(0)}
-.rv-l{opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
-.rv-l.in{opacity:1;transform:translateX(0)}
-.rv-r{opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
-.rv-r.in{opacity:1;transform:translateX(0)}
-
-@media(max-width:960px){
-  .section-how{flex-direction:column}
-  .how-left,.how-right{width:100%;padding:60px 32px}
-  .sol-cards{grid-template-columns:1fr}
-  .cmp-grid{grid-template-columns:1fr}.cmp-sep{display:none}.cmp-col.bad{border-right:none;border-bottom:1px solid var(--border)}
-  .data-layout{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:1fr}
-  .price-grid{grid-template-columns:1fr}
-  .faq-grid{grid-template-columns:1fr}
-  .foot-grid{grid-template-columns:1fr 1fr}
-  .nav-links{display:none}
-  nav{padding:0 24px}
-  footer{padding:60px 32px 32px}
-  .hero{padding:0 32px 80px}
-  .scroll-ind{display:none}
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .hero { padding: 100px 32px 80px; }
+  .scroll-cue { display: none; }
+  .wrap { padding: 0 32px; }
+  .how-steps { grid-template-columns: 1fr; }
+  .compare-grid { grid-template-columns: 1fr; }
+  .cmp-divider { display: none; }
+  .cmp-col.bad { border-right: none; border-bottom: 1px solid var(--border); }
+  .sol-grid { grid-template-columns: 1fr 1fr; }
+  .ppc-platforms { grid-template-columns: 1fr; }
+  .ppc-ready-inner { grid-template-columns: 1fr; }
+  .ppc-ready-left { border-right: none; border-bottom: 1px solid var(--border); }
+  .ppc-flow-wrap { grid-template-columns: 1fr; }
+  .pfc-divider { display: none; }
+  .ppc-layout { grid-template-columns: 1fr; }
+  .ppc-card-wrap { grid-template-columns: 1fr; }
+  .ppc-vs { padding: 12px 0; }
+  .ppc-stat-bar { grid-template-columns: 1fr; gap: 20px; }
+  .psb-div { width: 100%; height: 1px; }
+  .agency-layout { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: 1fr; }
+  .data-layout { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr; }
+  .price-grid { grid-template-columns: 1fr; }
+  .faq-grid { grid-template-columns: 1fr; }
+  .foot-grid { grid-template-columns: 1fr 1fr; }
+  footer { padding: 60px 32px 32px; }
+  .final-inner { padding: 0 32px; }
 }
 </style>
 </head>
@@ -621,356 +973,503 @@ footer{background:rgba(1,5,12,.99);border-top:1px solid var(--border);padding:72
 <div id="cur"></div>
 <div id="cur-r"></div>
 
+<!-- ── NAV ── -->
 <nav>
   <a href="#" class="logo">INMARKET<em>.AI</em></a>
   <ul class="nav-links">
-    <li><a href="#how">PRODUCT</a></li>
-    <li><a href="#solutions">SOLUTIONS</a></li>
-    <li><a href="#pricing">PRICING</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#solutions">Solutions</a></li>
+    <li><a href="#pricing">Pricing</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
-  <a href="#demo" class="nav-btn">GET A LEAD SAMPLE</a>
+  <a href="#demo" class="nav-btn">Get a Lead Sample →</a>
 </nav>
 
-<!-- ═══ HERO ═══ -->
+<!-- ── HERO ── -->
 <section class="hero">
-  <div class="hero-city"></div>
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
   <canvas id="hero-canvas"></canvas>
-  <div class="hero-grad"></div>
-  <div class="hero-grad-left"></div>
-  <div class="hero-scanlines"></div>
+  <div class="hero-vignette"></div>
   <div class="hero-content">
-    <div class="hero-badge"><span class="blink"></span>LIVE · INTENT DATA AS A SERVICE · DAAS 3.0</div>
+    <div class="hero-badge"><span class="blink"></span> Live · Intent Data as a Service · DaaS 3.0</div>
     <h1>
-      <span class="wh">WE KNOW WHO</span>
-      <span class="hl">JUST GOOGLED</span>
-      <span class="wh">YOUR BUSINESS.</span>
+      <span class="hero-line-white">WE KNOW WHO</span>
+      <span class="hero-line-cyan">JUST GOOGLED</span>
+      <span class="hero-line-white">YOUR BUSINESS.</span>
     </h1>
     <p class="hero-sub">InMarket.ai turns anonymous searchers into real prospects you can call, email, or retarget — within days, not months.</p>
     <div class="hero-btns">
-      <a href="#demo" class="btn-p">GET A LIVE LEAD SAMPLE →</a>
-      <a href="#how" class="btn-g">BOOK A 15-MIN DEMO</a>
+      <a href="#demo" class="btn-primary">Get a Live Lead Sample →</a>
+      <a href="#how" class="btn-outline">Book a 15-Min Demo</a>
     </div>
     <div class="hero-trust">
-      <span class="tc">No long-term contracts</span>
-      <span class="tc">Fresh intent data weekly</span>
-      <span class="tc">Works with your CRM</span>
+      <span class="trust-item">No long-term contracts</span>
+      <span class="trust-item">Fresh data daily</span>
+      <span class="trust-item">Works with your CRM</span>
     </div>
   </div>
-  <div class="scroll-ind"><div class="scroll-line"></div><span>SCROLL</span></div>
+  <div class="scroll-cue"><div class="scroll-line"></div><span>Scroll</span></div>
 </section>
 
-<!-- TICKER -->
+<!-- ── TICKER ── -->
 <div class="ticker-bar">
-  <div class="t-label"><span class="t-dot"></span>LIVE SIGNALS</div>
-  <div class="ticker-wrap">
-    <div class="ticker-inner">
-      <span class="tick"><span class="tq">"sell my house fast"</span><span class="tc2">Phoenix, AZ</span><span class="tt">2 min ago</span></span>
-      <span class="tick"><span class="tq">"injury lawyer near me"</span><span class="tc2">Houston, TX</span><span class="tt">5 min ago</span></span>
-      <span class="tick"><span class="tq">"emergency dentist today"</span><span class="tc2">Austin, TX</span><span class="tt">8 min ago</span></span>
-      <span class="tick"><span class="tq">"cash home buyers"</span><span class="tc2">Atlanta, GA</span><span class="tt">11 min ago</span></span>
-      <span class="tick"><span class="tq">"AC repair tonight"</span><span class="tc2">Dallas, TX</span><span class="tt">14 min ago</span></span>
-      <span class="tick"><span class="tq">"DUI attorney near me"</span><span class="tc2">Denver, CO</span><span class="tt">18 min ago</span></span>
-      <span class="tick"><span class="tq">"roof replacement quote"</span><span class="tc2">Charlotte, NC</span><span class="tt">22 min ago</span></span>
-      <span class="tick"><span class="tq">"workers comp lawyer"</span><span class="tc2">Miami, FL</span><span class="tt">25 min ago</span></span>
-      <span class="tick"><span class="tq">"sell my home quickly"</span><span class="tc2">Las Vegas, NV</span><span class="tt">27 min ago</span></span>
-      <span class="tick"><span class="tq">"24/7 plumber near me"</span><span class="tc2">Seattle, WA</span><span class="tt">30 min ago</span></span>
-      <span class="tick"><span class="tq">"sell my house fast"</span><span class="tc2">Phoenix, AZ</span><span class="tt">2 min ago</span></span>
-      <span class="tick"><span class="tq">"injury lawyer near me"</span><span class="tc2">Houston, TX</span><span class="tt">5 min ago</span></span>
-      <span class="tick"><span class="tq">"emergency dentist today"</span><span class="tc2">Austin, TX</span><span class="tt">8 min ago</span></span>
-      <span class="tick"><span class="tq">"cash home buyers"</span><span class="tc2">Atlanta, GA</span><span class="tt">11 min ago</span></span>
-      <span class="tick"><span class="tq">"AC repair tonight"</span><span class="tc2">Dallas, TX</span><span class="tt">14 min ago</span></span>
-      <span class="tick"><span class="tq">"DUI attorney near me"</span><span class="tc2">Denver, CO</span><span class="tt">18 min ago</span></span>
-      <span class="tick"><span class="tq">"roof replacement quote"</span><span class="tc2">Charlotte, NC</span><span class="tt">22 min ago</span></span>
-      <span class="tick"><span class="tq">"workers comp lawyer"</span><span class="tc2">Miami, FL</span><span class="tt">25 min ago</span></span>
-      <span class="tick"><span class="tq">"sell my home quickly"</span><span class="tc2">Las Vegas, NV</span><span class="tt">27 min ago</span></span>
-      <span class="tick"><span class="tq">"24/7 plumber near me"</span><span class="tc2">Seattle, WA</span><span class="tt">30 min ago</span></span>
-    </div>
+  <div class="ticker-label"><span class="ticker-dot"></span>Live Signals</div>
+  <div class="ticker-track">
+    <span class="tick-item"><span class="tq">"sell my house fast"</span><span class="tc">Phoenix, AZ</span><span class="tt">2 min ago</span></span>
+    <span class="tick-item"><span class="tq">"injury lawyer near me"</span><span class="tc">Houston, TX</span><span class="tt">5 min ago</span></span>
+    <span class="tick-item"><span class="tq">"emergency dentist today"</span><span class="tc">Austin, TX</span><span class="tt">8 min ago</span></span>
+    <span class="tick-item"><span class="tq">"cash home buyers"</span><span class="tc">Atlanta, GA</span><span class="tt">11 min ago</span></span>
+    <span class="tick-item"><span class="tq">"AC repair tonight"</span><span class="tc">Dallas, TX</span><span class="tt">14 min ago</span></span>
+    <span class="tick-item"><span class="tq">"DUI attorney near me"</span><span class="tc">Denver, CO</span><span class="tt">18 min ago</span></span>
+    <span class="tick-item"><span class="tq">"roof replacement quote"</span><span class="tc">Charlotte, NC</span><span class="tt">22 min ago</span></span>
+    <span class="tick-item"><span class="tq">"workers comp lawyer"</span><span class="tc">Miami, FL</span><span class="tt">25 min ago</span></span>
+    <span class="tick-item"><span class="tq">"sell my home quickly"</span><span class="tc">Las Vegas, NV</span><span class="tt">27 min ago</span></span>
+    <span class="tick-item"><span class="tq">"24/7 plumber near me"</span><span class="tc">Seattle, WA</span><span class="tt">30 min ago</span></span>
+    <!-- dupes for loop -->
+    <span class="tick-item"><span class="tq">"sell my house fast"</span><span class="tc">Phoenix, AZ</span><span class="tt">2 min ago</span></span>
+    <span class="tick-item"><span class="tq">"injury lawyer near me"</span><span class="tc">Houston, TX</span><span class="tt">5 min ago</span></span>
+    <span class="tick-item"><span class="tq">"emergency dentist today"</span><span class="tc">Austin, TX</span><span class="tt">8 min ago</span></span>
+    <span class="tick-item"><span class="tq">"cash home buyers"</span><span class="tc">Atlanta, GA</span><span class="tt">11 min ago</span></span>
+    <span class="tick-item"><span class="tq">"AC repair tonight"</span><span class="tc">Dallas, TX</span><span class="tt">14 min ago</span></span>
+    <span class="tick-item"><span class="tq">"DUI attorney near me"</span><span class="tc">Denver, CO</span><span class="tt">18 min ago</span></span>
+    <span class="tick-item"><span class="tq">"roof replacement quote"</span><span class="tc">Charlotte, NC</span><span class="tt">22 min ago</span></span>
+    <span class="tick-item"><span class="tq">"workers comp lawyer"</span><span class="tc">Miami, FL</span><span class="tt">25 min ago</span></span>
+    <span class="tick-item"><span class="tq">"sell my home quickly"</span><span class="tc">Las Vegas, NV</span><span class="tt">27 min ago</span></span>
+    <span class="tick-item"><span class="tq">"24/7 plumber near me"</span><span class="tc">Seattle, WA</span><span class="tt">30 min ago</span></span>
   </div>
 </div>
 
-<!-- ═══ HOW IT WORKS ═══ -->
+<!-- ── PPC + META SECTION ── -->
+<section class="section-ppc" id="advertisers">
+  <div class="ppc-bg"></div>
+  <div class="ppc-glow"></div>
+  <div class="wrap">
+
+    <!-- HERO STATEMENT -->
+    <div class="ppc-hero rv">
+      <div class="s-eyebrow" style="justify-content:center">For Google &amp; Meta Advertisers</div>
+      <div class="s-title" style="text-align:center;font-size:clamp(3.5rem,7vw,7.5rem)">
+        Be Google's<br>
+        <span style="color:var(--cyan);text-shadow:0 0 80px rgba(0,212,255,.7)">Little Brother.</span>
+      </div>
+      <p class="s-body" style="text-align:center;margin:0 auto;font-size:1.3rem;max-width:700px">
+        Right now, someone just closed their laptop after Googling your best keyword. Google knows exactly who that person is. Your competitor doesn't. <strong style="color:var(--white)">You will.</strong>
+      </p>
+    </div>
+
+    <!-- TWO PLATFORM CARDS -->
+    <div class="ppc-platforms rv">
+
+      <div class="ppc-platform-card">
+        <div class="ppc-plat-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93s3.05-7.44 7-7.93v15.86zm2 0V4.07c3.95.49 7 3.85 7 7.93s-3.05 7.44-7 7.93z" fill="var(--cyan)"/></svg>
+        </div>
+        <div class="ppc-plat-label">Google PPC</div>
+        <h3 class="ppc-plat-title">Your Ads Just Got<br>A Secret Weapon.</h3>
+        <p class="ppc-plat-body">You're already bidding on the right keywords. But 97% of searchers never click your ad. InMarket.ai captures the people who searched, never clicked, and walked away — and hands you their contact details the same day. Call them before your next ad even loads.</p>
+        <div class="ppc-plat-stat">
+          <span class="pps-num">97%</span>
+          <span class="pps-label">of searchers never click your ad.<br>We find them anyway.</span>
+        </div>
+      </div>
+
+      <div class="ppc-platform-card featured">
+        <div class="ppc-plat-icon" style="background:rgba(255,184,0,.12);border-color:rgba(255,184,0,.4)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="var(--gold)"/></svg>
+        </div>
+        <div class="ppc-plat-label" style="color:var(--gold)">Meta Ads</div>
+        <h3 class="ppc-plat-title">Surgical Retargeting.<br>Triple Your Conversions.</h3>
+        <p class="ppc-plat-body">We sync your intent data directly into your Meta account as a custom audience. Now your Facebook and Instagram ads are hitting people who <em style="color:var(--white);font-style:normal">literally just Googled your service</em> — not a lookalike, not a demographic guess. Real customers, reached at exactly the right time.</p>
+        <div class="ppc-plat-stat" style="border-color:rgba(255,184,0,.2);background:rgba(255,184,0,.05)">
+          <span class="pps-num" style="color:var(--gold)">3×</span>
+          <span class="pps-label">Average conversion rate increase<br>vs. standard Meta audiences</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- READINESS CALLOUT -->
+    <div class="ppc-readiness rv">
+      <div class="ppc-ready-inner">
+        <div class="ppc-ready-left">
+          <div class="ppr-icon">⚡</div>
+          <div>
+            <h3 class="ppr-title">But You Have To Be Ready For This.</h3>
+            <p class="ppr-body">This isn't data for people still figuring out their marketing. InMarket.ai hands you real customers who searched your best keywords in the last 24 hours — hot, verified, actionable. If you're currently running Google or Meta ads, this data turns your existing spend into an unfair advantage. If you're not, <a href="#demo" style="color:var(--cyan);text-decoration:none">let's talk about getting you there.</a></p>
+          </div>
+        </div>
+        <div class="ppc-ready-checks">
+          <div class="prc-item yes"><span class="prc-icon">✓</span><span>Running Google or Meta ads</span></div>
+          <div class="prc-item yes"><span class="prc-icon">✓</span><span>Have a sales team or follow-up process</span></div>
+          <div class="prc-item yes"><span class="prc-icon">✓</span><span>Want to dominate your local market</span></div>
+          <div class="prc-item no"><span class="prc-icon" style="color:var(--red)">✕</span><span style="color:var(--muted)">Not set up to act on fresh leads daily</span></div>
+          <div class="prc-item no"><span class="prc-icon" style="color:var(--red)">✕</span><span style="color:var(--muted)">Looking for a set-it-and-forget-it solution</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLOW COMPARISON -->
+    <div class="ppc-flow-wrap rv">
+      <div class="ppc-flow-col bad">
+        <div class="pfc-head bad">WITHOUT INMARKET.AI</div>
+        <div class="pfc-step"><span class="pfc-icon">🔍</span><div><strong>Someone Googles your keyword</strong><span>Only Google knows who they are</span></div></div>
+        <div class="pfc-arrow">↓</div>
+        <div class="pfc-step"><span class="pfc-icon">🎯</span><div><strong>They may see your PPC ad</strong><span>97% never click. You paid anyway.</span></div></div>
+        <div class="pfc-arrow">↓</div>
+        <div class="pfc-step"><span class="pfc-icon">👻</span><div><strong>They disappear forever</strong><span>You have no idea who they were</span></div></div>
+        <div class="pfc-arrow">↓</div>
+        <div class="pfc-step"><span class="pfc-icon">💸</span><div><strong>They hire your competitor</strong><span>Who called them first</span></div></div>
+      </div>
+
+      <div class="pfc-divider">VS</div>
+
+      <div class="ppc-flow-col good">
+        <div class="pfc-head good">WITH INMARKET.AI</div>
+        <div class="pfc-step good"><span class="pfc-icon">🔍</span><div><strong>Someone Googles your keyword</strong><span>InMarket.ai captures the signal instantly</span></div></div>
+        <div class="pfc-arrow" style="color:var(--cyan)">↓</div>
+        <div class="pfc-step good"><span class="pfc-icon">⚡</span><div><strong>You get their contact info same day</strong><span>Name, email, phone — verified and fresh</span></div></div>
+        <div class="pfc-arrow" style="color:var(--cyan)">↓</div>
+        <div class="pfc-step good"><span class="pfc-icon">🎯</span><div><strong>Data syncs to your Meta account</strong><span>They see your ad + you call them directly</span></div></div>
+        <div class="pfc-arrow" style="color:var(--cyan)">↓</div>
+        <div class="pfc-step good"><span class="pfc-icon">🤝</span><div><strong>You close the deal</strong><span>First mover wins. Every time.</span></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
 <section id="how" class="section-how">
   <div class="how-bg"></div>
-  <div class="how-left rv-l">
-    <div class="s-label">HOW IT WORKS</div>
-    <div class="s-head">FROM SEARCH<br>TO BOOKED<br>DEAL.</div>
-    <p class="s-sub">Three precise steps. Real people. Real searches. No guesswork.</p>
-    <div class="steps">
-      <div class="step active" data-panel="detect">
-        <div class="step-n">01</div>
-        <h3>DETECT HIGH-INTENT SEARCHES</h3>
-        <p>We monitor high-intent searches in your chosen markets — "sell my house fast," "best dentist near me," "injury lawyer [city]." Only people actively looking right now.</p>
-      </div>
-      <div class="step" data-panel="reveal">
-        <div class="step-n">02</div>
-        <h3>REVEAL THE PERSON BEHIND THE SEARCH</h3>
-        <p>Our system identifies real people behind those searches and enriches the data with contact details. You see who searched, what they searched, and when.</p>
-      </div>
-      <div class="step" data-panel="deliver">
-        <div class="step-n">03</div>
-        <h3>DELIVER READY-TO-WORK DATA</h3>
-        <p>Clean, ready-to-use list delivered weekly — via CSV, secure download, or direct CRM sync. Plug into your dialer, outbound, or retargeting flows and close deals.</p>
-      </div>
+  <div class="wrap">
+    <div class="how-intro rv">
+      <div class="s-eyebrow" style="justify-content:center">How It Works</div>
+      <div class="s-title" style="text-align:center">From Anonymous Search<br>To Booked Deal.</div>
+      <p class="s-body">Three precise steps. Real people actively searching for what you sell — delivered to you every day.</p>
     </div>
-  </div>
-  <div class="how-right rv-r">
-    <div class="how-panel active" id="panel-detect">
-      <div class="terminal">
-        <div class="term-bar"><span class="dr"></span><span class="dy"></span><span class="dg"></span><span class="term-title">INMARKET — LIVE SIGNAL DETECTOR · YOUR MARKET</span></div>
-        <div class="term-body">
-          <div class="t-comment">// REAL-TIME HIGH-INTENT SIGNALS DETECTED</div>
-          <div class="sig-row"><div class="sig-dot"></div><span class="sq">"sell my house fast"</span><span class="sl">Phoenix, AZ</span><span class="st">LIVE</span></div>
-          <div class="sig-row"><div class="sig-dot"></div><span class="sq">"cash home buyers near me"</span><span class="sl">Mesa, AZ</span><span class="st">3m ago</span></div>
-          <div class="sig-row"><div class="sig-dot"></div><span class="sq">"we buy houses [city]"</span><span class="sl">Scottsdale, AZ</span><span class="st">9m ago</span></div>
-          <div class="sig-row"><div class="sig-dot"></div><span class="sq">"sell my home quickly"</span><span class="sl">Tempe, AZ</span><span class="st">14m ago</span></div>
-          <div style="margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)"><span style="color:var(--cyan2)">↑ 4 new signals</span> detected in your market today</div>
-        </div>
+    <div class="how-steps rv">
+      <div class="how-step">
+        <div class="step-num">STEP 01</div>
+        <div class="step-icon">🔍</div>
+        <h3>Detect High-Intent Searches</h3>
+        <p>We monitor high-intent searches in your chosen markets — things like "sell my house fast," "best dentist near me," or "injury lawyer [city]." We focus only on people actively looking right now, not general browsers.</p>
       </div>
-    </div>
-    <div class="how-panel" id="panel-reveal">
-      <div class="profile-card">
-        <div class="p-avatar">JS</div>
-        <div class="p-name">J. SMITH</div>
-        <div class="p-loc">📍 Phoenix, AZ · 85001</div>
-        <div class="p-field"><span class="pf-k">EMAIL</span><span class="pf-v" style="filter:blur(4px)">j.smith@email.com</span></div>
-        <div class="p-field"><span class="pf-k">PHONE</span><span class="pf-v" style="filter:blur(4px)">(602) 555-XXXX</span></div>
-        <div class="p-field"><span class="pf-k">SEARCHED</span><span class="pf-v">"sell my house fast"</span></div>
-        <div class="p-field"><span class="pf-k">SIGNAL AGE</span><span class="pf-v" style="color:var(--cyan2)">2 DAYS AGO</span></div>
-        <div class="p-badge">✓ HIGH INTENT — READY TO CONTACT</div>
+      <div class="how-step">
+        <div class="step-num">STEP 02</div>
+        <div class="step-icon">👤</div>
+        <h3>Reveal The Person Behind The Search</h3>
+        <p>Our system identifies real people behind those searches and enriches the data with contact details. You see who searched, what they searched for, and exactly when they searched.</p>
       </div>
-    </div>
-    <div class="how-panel" id="panel-deliver">
-      <div class="terminal">
-        <div class="term-bar"><span class="dr"></span><span class="dy"></span><span class="dg"></span><span class="term-title">INMARKET — WEEKLY DELIVERY · SYNCING 47 PROSPECTS</span></div>
-        <div class="term-body">
-          <div class="t-comment">// PUSHING TO YOUR STACK NOW</div>
-          <div class="d-line"></div>
-          <div class="d-target"><span class="d-icon">📂</span><span class="d-name">prospect-list-week-47.csv</span><span class="d-status">DELIVERED</span></div>
-          <div class="d-target"><span class="d-icon">🔄</span><span class="d-name">HubSpot CRM Sync</span><span class="d-status">SYNCED</span></div>
-          <div class="d-target"><span class="d-icon">📞</span><span class="d-name">Dialer / Outbound Queue</span><span class="d-status">LOADED</span></div>
-          <div class="d-target"><span class="d-icon">🎯</span><span class="d-name">Custom Ad Audience</span><span class="d-status">ACTIVE</span></div>
-        </div>
+      <div class="how-step">
+        <div class="step-num">STEP 03</div>
+        <div class="step-icon">📥</div>
+        <h3>Deliver Ready-To-Work Data</h3>
+        <p>You receive a clean, ready-to-use list every day — via CSV, secure download, or direct CRM sync. Plug it into your dialer, outbound campaigns, or retargeting flows and turn intent into deals.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ COMPARE ═══ -->
+<!-- ── COMPARE ── -->
 <section class="section-compare">
   <div class="compare-bg"></div>
-  <div class="cmp-inner">
-    <div class="cmp-head rv">
-      <div class="s-label" style="justify-content:center">THE PROBLEM</div>
-      <div class="s-head" style="font-size:clamp(3rem,7vw,6.5rem);text-align:center">STOP SHOUTING<br>INTO THE VOID.</div>
+  <div class="wrap">
+    <div class="compare-intro rv">
+      <div class="s-eyebrow" style="justify-content:center">The Problem</div>
+      <div class="s-title" style="text-align:center">Stop Shouting Into The Void.</div>
+      <p class="s-body" style="margin:0 auto">Traditional lead gen is a volume game you can never win. There's a better way.</p>
     </div>
-    <div class="cmp-grid rv">
+    <div class="compare-grid rv">
       <div class="cmp-col bad">
-        <div class="cmp-title bad">✕ THE OLD WAY</div>
-        <div class="cmp-item"><span class="ci" style="color:var(--red)">✕</span>Buying cold lists with zero purchase intent</div>
-        <div class="cmp-item"><span class="ci" style="color:var(--red)">✕</span>Paying for clicks, praying someone converts</div>
-        <div class="cmp-item"><span class="ci" style="color:var(--red)">✕</span>Lookalike audiences that "might" be interested</div>
-        <div class="cmp-item"><span class="ci" style="color:var(--red)">✕</span>No timing insight — calling last year's leads</div>
-        <div class="cmp-item"><span class="ci" style="color:var(--red)">✕</span>Mass mailers to whole zip codes hoping for luck</div>
+        <div class="cmp-title bad">✕ The Old Way</div>
+        <div class="cmp-item"><span class="cmp-icon" style="color:var(--red)">✕</span>Buying cold lists with zero purchase intent</div>
+        <div class="cmp-item"><span class="cmp-icon" style="color:var(--red)">✕</span>Paying for clicks and praying someone converts</div>
+        <div class="cmp-item"><span class="cmp-icon" style="color:var(--red)">✕</span>Lookalike audiences that "might" be interested</div>
+        <div class="cmp-item"><span class="cmp-icon" style="color:var(--red)">✕</span>No timing insight — calling last year's cold leads</div>
+        <div class="cmp-item"><span class="cmp-icon" style="color:var(--red)">✕</span>Mass mailers to entire zip codes hoping for luck</div>
       </div>
-      <div class="cmp-sep">VS</div>
-      <div class="cmp-col gd">
-        <div class="cmp-title gd">→ INMARKET.AI</div>
-        <div class="cmp-item"><span class="ci" style="color:var(--cyan)">→</span>People who <em style="color:var(--cyan);font-style:normal">just searched</em> for your exact offer</div>
-        <div class="cmp-item"><span class="ci" style="color:var(--cyan)">→</span>Know exactly who's in-market right now</div>
-        <div class="cmp-item"><span class="ci" style="color:var(--cyan)">→</span>Real behavior — not probabilistic guesswork</div>
-        <div class="cmp-item"><span class="ci" style="color:var(--cyan)">→</span>Reach them while intent is hottest — within 7 days</div>
-        <div class="cmp-item"><span class="ci" style="color:var(--cyan)">→</span>A list of people who already raised their hand</div>
+      <div class="cmp-divider">VS</div>
+      <div class="cmp-col good">
+        <div class="cmp-title good">→ InMarket.ai</div>
+        <div class="cmp-item"><span class="cmp-icon" style="color:var(--cyan)">→</span>People who <strong style="color:var(--cyan)">just searched</strong> for your exact offer</div>
+        <div class="cmp-item"><span class="cmp-icon" style="color:var(--cyan)">→</span>Know exactly who is in-market right now</div>
+        <div class="cmp-item"><span class="cmp-icon" style="color:var(--cyan)">→</span>Real behavior — not probabilistic guesswork</div>
+        <div class="cmp-item"><span class="cmp-icon" style="color:var(--cyan)">→</span>Reach them while intent is hottest — within 7 days</div>
+        <div class="cmp-item"><span class="cmp-icon" style="color:var(--cyan)">→</span>A list of people who already raised their hand</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ SOLUTIONS ═══ -->
+<!-- ── SOLUTIONS ── -->
 <section id="solutions" class="section-solutions">
-  <div class="sol-heading-band rv">
-    <div class="s-label" style="justify-content:center">SOLUTIONS</div>
-    <div class="s-head" style="font-size:clamp(3rem,6vw,5.5rem);text-align:center">BUILT FOR DEAL MAKERS.</div>
-    <p style="color:var(--muted);font-size:1.1rem;font-weight:300;max-width:540px;margin:16px auto 0;text-align:center">If your revenue comes from catching demand at exactly the right moment, InMarket.ai gives you the edge your competitors don't have.</p>
+  <div class="sol-header rv">
+    <div class="s-eyebrow" style="justify-content:center">Solutions</div>
+    <div class="s-title" style="text-align:center">Built For Deal Makers.</div>
+    <p class="s-body">If your revenue comes from catching demand at exactly the right moment, InMarket.ai gives you the edge your competitors don't have.</p>
   </div>
-  <div class="sol-cards">
+  <div class="sol-grid">
     <div class="sol-card rv">
-      <span class="sol-num-big">01</span>
-      <div class="sol-card-content">
-        <span class="sol-tag2">REAL ESTATE INVESTORS</span>
-        <h3>MOTIVATED SELLERS.<br>NOT COLD LISTS.</h3>
-        <p>Stop mailing postcards to zip codes. We show you homeowners who just searched for a way out — so you focus only on people already raising their hand.</p>
-        <div class="sol-terms2">
-          <span class="s-term">"sell my house fast"</span>
-          <span class="s-term">"cash home buyers"</span>
-          <span class="s-term">"we buy houses"</span>
+      <span class="sol-bg-num">01</span>
+      <div class="sol-content">
+        <span class="sol-label">Real Estate Investors</span>
+        <h3>Motivated Sellers.<br>Not Cold Lists.</h3>
+        <p>Stop mailing postcards to entire zip codes. We show you homeowners who just searched for a way out — so you focus only on people already raising their hand in your markets.</p>
+        <div class="sol-tags">
+          <span class="sol-tag">"sell my house fast"</span>
+          <span class="sol-tag">"cash home buyers"</span>
+          <span class="sol-tag">"we buy houses"</span>
         </div>
       </div>
     </div>
     <div class="sol-card rv">
-      <span class="sol-num-big">02</span>
-      <div class="sol-card-content">
-        <span class="sol-tag2">LOCAL SERVICES</span>
-        <h3>HIGH-VALUE JOBS.<br>PERFECT TIMING.</h3>
-        <p>Dentists, roofers, HVAC, plumbers — timing is everything. We identify urgent, high-intent searchers in your area before competitors even know they exist.</p>
-        <div class="sol-terms2">
-          <span class="s-term">"emergency dentist"</span>
-          <span class="s-term">"AC repair tonight"</span>
-          <span class="s-term">"roof replacement"</span>
+      <span class="sol-bg-num">02</span>
+      <div class="sol-content">
+        <span class="sol-label">Local Services</span>
+        <h3>High-Value Jobs.<br>Perfect Timing.</h3>
+        <p>Dentists, roofers, HVAC companies, plumbers — timing is everything. We identify urgent, high-intent searchers in your service area before your competitors even know they exist.</p>
+        <div class="sol-tags">
+          <span class="sol-tag">"emergency dentist"</span>
+          <span class="sol-tag">"AC repair tonight"</span>
+          <span class="sol-tag">"roof replacement"</span>
         </div>
       </div>
     </div>
     <div class="sol-card rv">
-      <span class="sol-num-big">03</span>
-      <div class="sol-card-content">
-        <span class="sol-tag2">LAW FIRMS</span>
-        <h3>HIGH-INTENT CASES.<br>FIRST CONTACT.</h3>
-        <p>Instead of paying for clicks, focus on people actively searching for help. Your intake team starts conversations while intent is at its absolute peak.</p>
-        <div class="sol-terms2">
-          <span class="s-term">"injury lawyer"</span>
-          <span class="s-term">"DUI attorney"</span>
-          <span class="s-term">"workers comp"</span>
+      <span class="sol-bg-num">03</span>
+      <div class="sol-content">
+        <span class="sol-label">Law Firms</span>
+        <h3>High-Intent Cases.<br>First Contact.</h3>
+        <p>Instead of paying for clicks and impressions, focus on people actively searching for legal help. Your intake team starts conversations while intent is at its absolute peak.</p>
+        <div class="sol-tags">
+          <span class="sol-tag">"injury lawyer"</span>
+          <span class="sol-tag">"DUI attorney"</span>
+          <span class="sol-tag">"workers comp"</span>
+        </div>
+      </div>
+    </div>
+    <div class="sol-card rv">
+      <span class="sol-bg-num">04</span>
+      <div class="sol-content">
+        <span class="sol-label">Door-Knocking & Canvassing</span>
+        <h3>Know Every Door<br>Before You Knock.</h3>
+        <p>Stop wasting hours on cold streets. We give roofers, solar companies, and home services teams hyper-targeted lists of households actively searching — so every door you knock has a real reason to open. Clients report 10–20% conversion rates vs. cold canvassing averages of 1–2%.</p>
+        <div class="sol-tags">
+          <span class="sol-tag">"roof replacement near me"</span>
+          <span class="sol-tag">"solar panels cost"</span>
+          <span class="sol-tag">"window replacement"</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ WHY ═══ -->
+<!-- ── WHY ── -->
 <section class="section-why">
   <div class="why-bg"></div>
-  <div class="why-inner">
-    <div class="rv" style="text-align:center">
-      <div class="s-label" style="justify-content:center">WHY INMARKET.AI</div>
-      <div class="s-head" style="font-size:clamp(2.5rem,5vw,5rem);text-align:center">YOUR COMPETITORS<br>DON'T HAVE THIS.</div>
+  <div class="wrap">
+    <div class="why-intro rv">
+      <div class="s-eyebrow" style="justify-content:center">Why InMarket.ai</div>
+      <div class="s-title" style="text-align:center">Your Competitors<br>Don't Have This.</div>
+      <p class="s-body" style="margin:0 auto">Four reasons our customers call this their unfair advantage.</p>
     </div>
     <div class="why-grid rv">
-      <div class="why-item"><div class="why-icon">🎯</div><h3>REAL SEARCH BEHAVIOR, NOT LOOKALIKES</h3><p>You aren't buying generic lists. You're targeting people who actually searched for your service in the last 7 days. Real behavior. Not probability. Not guesswork.</p></div>
-      <div class="why-item"><div class="why-icon">⚡</div><h3>FRESH, TIME-SENSITIVE DATA</h3><p>Intent goes cold fast. We deliver updated lists weekly so your team works people still in active research mode — not last month's cold prospects.</p></div>
-      <div class="why-item"><div class="why-icon">🔗</div><h3>PLUG-AND-PLAY WITH YOUR STACK</h3><p>Export CSV, push to CRM, load your dialer, build custom ad audiences. No complex onboarding. Better data flowing into the tools you already know.</p></div>
-      <div class="why-item"><div class="why-icon">🧭</div><h3>MINIMAL LIFT, MAXIMUM CLARITY</h3><p>We don't ask you to rebuild your marketing. Surgical precision on who's in-market right now, plugged into what already works.</p></div>
+      <div class="why-item">
+        <div class="why-icon">🎯</div>
+        <h3>Real Search Behavior, Not Lookalikes</h3>
+        <p>You aren't buying generic lists. You're targeting people who actually searched for your service in the last 7 days. Real behavior. Not probability. Not guesswork.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">⚡</div>
+        <h3>Fresh, Time-Sensitive Data</h3>
+        <p>Intent goes cold fast. We deliver updated prospect lists every day so your team works people still in active research mode — not last month's forgotten leads.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🔗</div>
+        <h3>Plug-and-Play With Your Stack</h3>
+        <p>Export CSV, push directly to your CRM, load your dialer, or build custom ad audiences. No complex onboarding. Better data powering the tools you already use.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🧭</div>
+        <h3>Minimal Lift, Maximum Clarity</h3>
+        <p>We don't ask you to rebuild your marketing. Surgical precision on who's in-market right now — you simply plug that into what already works for you.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ DATA ═══ -->
+<!-- ── DATA ── -->
 <section class="section-data">
   <div class="data-bg"></div>
-  <div class="data-inner">
+  <div class="wrap">
     <div class="data-layout">
       <div class="rv-l">
-        <div class="s-label">THE DATA</div>
-        <div class="s-head" style="font-size:clamp(2.5rem,4vw,4.5rem)">SEE EXACTLY<br>WHAT YOU'LL<br>RECEIVE.</div>
-        <p class="s-sub">Every delivery is clean, simple, and ready to put to work the same day.</p>
+        <div class="s-eyebrow">The Data</div>
+        <div class="s-title">See Exactly<br>What You'll<br>Receive.</div>
+        <p class="s-body">Every delivery is clean, simple, and ready to put to work the same day it arrives.</p>
         <div class="data-list">
-          <div class="d-item">Recent searchers in your target geography matching your service</div>
-          <div class="d-item">Contact details — name, email, and often phone number</div>
-          <div class="d-item">Search intent category — "sell my house fast," "injury lawyer," etc.</div>
-          <div class="d-item">Signal age — seen in the last 7, 14, or 30 days</div>
-          <div class="d-item">Optional segmentation tags — market, niche, priority level</div>
+          <div class="data-item">Recent searchers in your target geography matching your service</div>
+          <div class="data-item">Contact details — name, email, and often a phone number</div>
+          <div class="data-item">Search intent category — "sell my house fast," "injury lawyer," etc.</div>
+          <div class="data-item">Signal age — seen in the last 7, 14, or 30 days</div>
+          <div class="data-item">Optional segmentation tags — market, niche, priority level</div>
         </div>
       </div>
       <div class="rv-r">
         <div class="terminal">
-          <div class="term-bar"><span class="dr"></span><span class="dy"></span><span class="dg"></span><span class="term-title">INMARKET — PROSPECT EXPORT · WEEK 47 · 47 RECORDS</span></div>
-          <div style="padding:0">
-            <table style="width:100%;border-collapse:collapse">
-              <thead><tr style="background:#050505">
-                <th style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);padding:12px 16px;text-align:left;border-bottom:1px solid rgba(0,212,255,.06)">NAME</th>
-                <th style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);padding:12px 16px;text-align:left;border-bottom:1px solid rgba(0,212,255,.06)">CITY</th>
-                <th style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);padding:12px 16px;text-align:left;border-bottom:1px solid rgba(0,212,255,.06)">INTENT</th>
-                <th style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);padding:12px 16px;text-align:left;border-bottom:1px solid rgba(0,212,255,.06)">AGE</th>
-              </tr></thead>
-              <tbody>
-                <tr><td style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:12px 16px;border-bottom:1px solid rgba(0,212,255,.04);filter:blur(5px);color:var(--muted)">J. Smith</td><td style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:12px 16px;border-bottom:1px solid rgba(0,212,255,.04);color:var(--text)">Phoenix, AZ</td><td style="padding:12px 16px;border-bottom:1px solid rgba(0,212,255,.04)"><span style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 8px">sell my house fast</span></td><td style="padding:12px 16px;border-bottom:1px solid rgba(0,212,255,.04)"><span style="background:rgba(0,255,178,.1);border:1px solid rgba(0,255,178,.2);color:var(--cyan2);font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 8px">2 days</span></td></tr>
-                <tr><td style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:12px 16px;border-bottom:1px solid rgba(0,212,255,.04);filter:blur(5px);color:var(--muted)">A. Lopez</td><td style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:12px 16px;border-bottom:1px solid rgba(0,212,255,.04);color:var(--text)">Mesa, AZ</td><td style="padding:12px 16px;border-bottom:1px solid rgba(0,212,255,.04)"><span style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 8px">cash home buyers</span></td><td style="padding:12px 16px;border-bottom:1px solid rgba(0,212,255,.04)"><span style="background:rgba(0,255,178,.1);border:1px solid rgba(0,255,178,.2);color:var(--cyan2);font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 8px">4 days</span></td></tr>
-                <tr><td style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:12px 16px;border-bottom:1px solid rgba(0,212,255,.04);filter:blur(5px);color:var(--muted)">M. Johnson</td><td style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:12px 16px;border-bottom:1px solid rgba(0,212,255,.04);color:var(--text)">Scottsdale, AZ</td><td style="padding:12px 16px;border-bottom:1px solid rgba(0,212,255,.04)"><span style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 8px">we buy houses</span></td><td style="padding:12px 16px;border-bottom:1px solid rgba(0,212,255,.04)"><span style="background:rgba(0,255,178,.1);border:1px solid rgba(0,255,178,.2);color:var(--cyan2);font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 8px">5 days</span></td></tr>
-                <tr><td style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:12px 16px;border-bottom:1px solid rgba(0,212,255,.04);filter:blur(5px);color:var(--muted)">R. Williams</td><td style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:12px 16px;border-bottom:1px solid rgba(0,212,255,.04);color:var(--text)">Tempe, AZ</td><td style="padding:12px 16px;border-bottom:1px solid rgba(0,212,255,.04)"><span style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 8px">sell my home quickly</span></td><td style="padding:12px 16px;border-bottom:1px solid rgba(0,212,255,.04)"><span style="background:rgba(0,255,178,.1);border:1px solid rgba(0,255,178,.2);color:var(--cyan2);font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 8px">7 days</span></td></tr>
-                <tr><td style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:12px 16px;filter:blur(5px);color:var(--muted)">D. Garcia</td><td style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:12px 16px;color:var(--text)">Chandler, AZ</td><td style="padding:12px 16px"><span style="background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 8px">sell my house fast</span></td><td style="padding:12px 16px"><span style="background:rgba(0,255,178,.1);border:1px solid rgba(0,255,178,.2);color:var(--cyan2);font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 8px">7 days</span></td></tr>
-              </tbody>
-            </table>
-            <div style="padding:12px 18px;border-top:1px solid rgba(0,212,255,.06);font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--dim);letter-spacing:.08em">↳ NAMES BLURRED FOR PRIVACY · ACTUAL DATA VARIES BY MARKET &amp; PACKAGE</div>
-          </div>
+          <div class="term-bar"><span class="dr"></span><span class="dy"></span><span class="dg"></span><span class="term-title">InMarket — Prospect Export · Week 47 · 47 Records</span></div>
+          <table class="term-table">
+            <thead><tr>
+              <th>Name</th><th>City</th><th>Intent Query</th><th>Signal Age</th>
+            </tr></thead>
+            <tbody>
+              <tr><td class="blr">J. Smith</td><td>Phoenix, AZ</td><td><span class="tag-c">sell my house fast</span></td><td><span class="tag-g">2 days</span></td></tr>
+              <tr><td class="blr">A. Lopez</td><td>Mesa, AZ</td><td><span class="tag-c">cash home buyers</span></td><td><span class="tag-g">4 days</span></td></tr>
+              <tr><td class="blr">M. Johnson</td><td>Scottsdale, AZ</td><td><span class="tag-c">we buy houses</span></td><td><span class="tag-g">5 days</span></td></tr>
+              <tr><td class="blr">R. Williams</td><td>Tempe, AZ</td><td><span class="tag-c">sell my home quickly</span></td><td><span class="tag-g">7 days</span></td></tr>
+              <tr><td class="blr">D. Garcia</td><td>Chandler, AZ</td><td><span class="tag-c">sell my house fast</span></td><td><span class="tag-g">7 days</span></td></tr>
+            </tbody>
+          </table>
+          <div class="term-footer">↳ Names blurred for privacy · Actual data varies by market &amp; package</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ PROOF ═══ -->
+<!-- ── PROOF ── -->
 <section class="section-proof">
   <div class="proof-bg"></div>
   <div class="proof-inner">
     <div class="rv" style="position:relative">
-      <div class="q-mark">"</div>
-      <div class="s-label" style="justify-content:center;margin-bottom:32px">RESULTS</div>
-      <blockquote>"IN OUR FIRST MONTH WE CLOSED THREE DEALS TIED DIRECTLY TO PEOPLE WHO SEARCHED 'SELL MY HOUSE FAST' AND HIT OUR LIST. IT FEELS LIKE SEEING BEHIND THE CURTAIN OF GOOGLE."</blockquote>
-      <div class="q-auth" style="margin-top:28px">— <span>[NAME]</span> · REAL ESTATE INVESTOR · PHOENIX, AZ</div>
+      <div class="quote-mark">"</div>
+      <div class="s-eyebrow" style="justify-content:center;margin-bottom:28px">Results</div>
+      <blockquote>"In our first month we closed three deals tied directly to people who searched 'sell my house fast' and hit our list. It feels like seeing behind the curtain of Google."</blockquote>
+      <div class="q-author">— <span>[Name]</span> · Real Estate Investor · Phoenix, AZ</div>
     </div>
-    <div class="stats-grid rv">
-      <div class="stat"><div class="stat-n">7</div><div class="stat-d">Days average from delivery<br>to first booked deal</div></div>
-      <div class="stat"><div class="stat-n">3×</div><div class="stat-d">Higher response rate vs<br>traditional cold outbound</div></div>
-      <div class="stat"><div class="stat-n">100%</div><div class="stat-d">In-market verified searches —<br>zero guesswork, zero wasted dials</div></div>
+    <div class="stats-row rv">
+      <div class="stat-box"><div class="stat-num">7</div><div class="stat-desc">Days average from delivery<br>to first booked deal</div></div>
+      <div class="stat-box"><div class="stat-num">3×</div><div class="stat-desc">Higher response rate vs<br>traditional cold outbound lists</div></div>
+      <div class="stat-box"><div class="stat-num">100%</div><div class="stat-desc">In-market verified searches —<br>zero guesswork, zero wasted dials</div></div>
     </div>
   </div>
 </section>
 
-<!-- ═══ PRICING ═══ -->
+
+
+
+<!-- ── PRICING ── -->
 <section id="pricing" class="section-pricing">
   <div class="pricing-bg"></div>
-  <div class="price-inner">
-    <div class="rv" style="text-align:center">
-      <div class="s-label" style="justify-content:center">PRICING</div>
-      <div class="s-head" style="font-size:clamp(3rem,6vw,6rem);text-align:center">START SMALL.<br>SCALE FAST.</div>
-      <p class="s-sub" style="margin:0 auto;text-align:center">No long-term contracts. Prove the ROI. Then scale.</p>
+  <div class="wrap">
+    <div class="pricing-intro rv">
+      <div class="s-eyebrow" style="justify-content:center">Pricing</div>
+      <div class="s-title" style="text-align:center">Start Small. Scale Fast.</div>
+      <p class="s-body">No long-term contracts. Prove the ROI first, then scale your volume and markets as you grow.</p>
     </div>
     <div class="price-grid rv">
-      <div class="p-card"><div class="p-tier">// TIER 01</div><h3>STARTER</h3><p class="p-for">For solo operators and small teams getting started with intent data.</p><ul class="p-feats"><li>1 market or metro area</li><li>1 primary niche</li><li>Up to X intent leads per month</li><li>Weekly data deliveries</li><li>CSV export</li><li>Email support</li></ul><a href="#demo" class="p-cta out">TALK TO US ABOUT STARTER →</a></div>
-      <div class="p-card feat"><div class="p-badge2">MOST POPULAR</div><div class="p-tier">// TIER 02</div><h3>GROWTH</h3><p class="p-for">For growing investors, agencies, and multi-location businesses.</p><ul class="p-feats"><li>Multiple markets or territories</li><li>Multiple niches or service lines</li><li>Higher monthly lead volumes</li><li>Weekly or semi-weekly deliveries</li><li>CRM export &amp; automation guidance</li><li>Priority support</li></ul><a href="#demo" class="p-cta fil">EXPLORE GROWTH OPTIONS →</a></div>
-      <div class="p-card"><div class="p-tier">// TIER 03</div><h3>ENTERPRISE</h3><p class="p-for">For enterprises, large agencies, and data partners.</p><ul class="p-feats"><li>Custom volumes and territories</li><li>Multi-vertical support</li><li>Whitelabel / API access options</li><li>Dedicated account strategist</li><li>Custom delivery schedules</li></ul><a href="#demo" class="p-cta out">CONTACT SALES →</a></div>
+      <div class="price-card">
+        <div class="price-tier">// Tier 01</div>
+        <h3>Starter</h3>
+        <div class="price-amount">$1,500<span>/mo</span></div>
+        <p class="price-for">For solo operators and small teams getting started with intent data.</p>
+        <ul class="price-features">
+          <li>1 market or metro area</li>
+          <li>1 primary niche</li>
+          <li>Up to 10,000 audiences per month</li>
+          <li>Refreshed daily</li>
+          <li>Synced directly into your Meta account</li>
+          <li>Email support</li>
+        </ul>
+        <a href="#demo" class="price-cta out">Get Started →</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Most Popular</div>
+        <div class="price-tier">// Tier 02</div>
+        <h3>Growth</h3>
+        <div class="price-amount">$2,500<span>/mo</span></div>
+        <p class="price-for">For growing investors, agencies, and multi-location businesses.</p>
+        <ul class="price-features">
+          <li>Multiple markets or territories</li>
+          <li>Multiple niches or service lines</li>
+          <li>Up to 25,000 audiences per month</li>
+          <li>Refreshed daily</li>
+          <li>Direct Meta &amp; Google audience sync</li>
+          <li>CRM &amp; dialer integration guidance</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#demo" class="price-cta fil">Get Started →</a>
+      </div>
+      <div class="price-card">
+        <div class="price-tier">// Tier 03</div>
+        <h3>Enterprise</h3>
+        <div class="price-amount">$10,000<span>/mo</span></div>
+        <p class="price-for">For enterprises and large operations needing nationwide scale.</p>
+        <ul class="price-features">
+          <li>Nationwide audiences</li>
+          <li>Unlimited audiences per month</li>
+          <li>All niches and verticals</li>
+          <li>Dedicated account strategist</li>
+          <li>Custom delivery &amp; integrations</li>
+          <li>Custom quote available</li>
+        </ul>
+        <a href="#demo" class="price-cta out">Contact Sales →</a>
+      </div>
     </div>
+    <p style="text-align:center;font-size:14px;color:var(--muted);margin-top:28px">On your demo we'll show you estimated intent volume in your market before you commit to anything.</p>
   </div>
 </section>
 
-<!-- ═══ FAQ ═══ -->
+<!-- ── FAQ ── -->
 <section id="faq" class="section-faq">
-  <div class="faq-inner">
-    <div class="rv" style="text-align:center"><div class="s-label" style="justify-content:center">FAQ</div><div class="s-head" style="font-size:clamp(2.5rem,5vw,5rem);text-align:center">EVERY QUESTION.<br>ANSWERED.</div></div>
+  <div class="wrap">
+    <div class="faq-intro rv">
+      <div class="s-eyebrow" style="justify-content:center">FAQ</div>
+      <div class="s-title" style="text-align:center">Every Question. Answered.</div>
+    </div>
     <div class="faq-grid rv">
-      <div class="faq-item"><h4>HOW ACCURATE IS THE DATA?</h4><p>Our goal is usable data you can put into your pipeline with confidence. Match rates vary by market and niche, but we continuously monitor and refine quality. We'll walk through expectations on your demo call.</p></div>
-      <div class="faq-item"><h4>HOW OFTEN DO I RECEIVE NEW DATA?</h4><p>Most customers receive weekly deliveries. Higher-volume and enterprise customers may opt for more frequent refreshes depending on use case and geography.</p></div>
-      <div class="faq-item"><h4>DO YOU INTEGRATE WITH MY CRM?</h4><p>Yes. At minimum you can export CSV files compatible with major CRMs and dialers. Growth and Custom plans include help setting up automated workflows into your existing tools.</p></div>
-      <div class="faq-item"><h4>WHAT ABOUT COMPLIANCE AND PRIVACY?</h4><p>We take compliance seriously and operate within relevant data and privacy regulations. We discuss our approach and your contact responsibilities on every demo call.</p></div>
-      <div class="faq-item"><h4>IS THERE A LONG-TERM CONTRACT?</h4><p>No. We want you to stay because the data is driving results — not because you're locked in. Most customers start small, prove ROI, then scale aggressively.</p></div>
-      <div class="faq-item"><h4>WHAT DO I NEED TO GET STARTED?</h4><p>Someone who can follow up with leads, and a basic CRM or spreadsheet. If you already have a dialer or outbound motion, we make it dramatically more effective.</p></div>
+      <div class="faq-item"><h4>How accurate is the data?</h4><p>Our goal is usable data you can put into your pipeline with confidence. Match rates vary by market and niche, but we continuously monitor and refine quality. We'll walk through what to expect for your vertical on your demo call.</p></div>
+      <div class="faq-item"><h4>How often do I receive new data?</h4><p>All plans receive daily data refreshes. Your audiences are updated every day with fresh high-intent signals so you're always working the most current prospects in your market.</p></div>
+      <div class="faq-item"><h4>Do you integrate with my CRM?</h4><p>Yes. At minimum you can export CSV files compatible with major CRMs and dialers. Growth and Custom plans include help setting up automated workflows that push InMarket.ai data directly into your tools.</p></div>
+      <div class="faq-item"><h4>What about compliance and privacy?</h4><p>We take compliance seriously and operate within relevant data and privacy regulations. We cover our approach and your responsibilities for contacting prospects on every demo call.</p></div>
+      <div class="faq-item"><h4>Is there a long-term contract?</h4><p>No. We want you to stay because the data is driving results — not because you're locked in. Most customers start small, prove ROI quickly, then scale aggressively.</p></div>
+      <div class="faq-item"><h4>What do I need to get started?</h4><p>Someone who can follow up with leads and a basic CRM or spreadsheet to track conversations. If you already have a dialer or outbound motion, we simply make it far more effective with better data.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ═══ FINAL CTA ═══ -->
+<!-- ── FINAL CTA ── -->
 <section id="demo" class="section-final">
   <div class="final-bg"></div>
-  <div class="final-grid"></div>
   <div class="final-glow"></div>
+  <div class="final-grid"></div>
   <div class="final-inner rv">
-    <div class="s-label" style="justify-content:center">GET STARTED NOW</div>
-    <div class="s-head">YOUR NEXT<br>CUSTOMER JUST<br>GOOGLED YOUR<br>BUSINESS.</div>
-    <p class="s-sub">The only question is whether you'll know who they are.</p>
+    <div class="s-eyebrow" style="justify-content:center;margin-bottom:28px">Get Started Now</div>
+    <div class="final-h">YOUR NEXT<br>CUSTOMER JUST<br>GOOGLED YOUR<br>BUSINESS.</div>
+    <p class="final-sub">The only question is whether you'll know who they are.</p>
     <div class="final-btns">
-      <a href="mailto:hello@inmarket.ai" class="btn-p">GET A LIVE LEAD SAMPLE →</a>
-      <a href="mailto:hello@inmarket.ai" class="btn-g">BOOK A 15-MIN DEMO</a>
+      <a href="/cdn-cgi/l/email-protection#f8909d949497b8919695998a939d8cd69991" class="btn-primary">Get a Live Lead Sample →</a>
+      <a href="/cdn-cgi/l/email-protection#1d75787171725d7473707c6f767869337c74" class="btn-outline">Book a 15-Min Demo</a>
     </div>
   </div>
 </section>
 
+<!-- ── FOOTER ── */
 <footer>
   <div class="foot-grid">
-    <div class="foot-brand"><a href="#" class="foot-logo">INMARKET<em>.AI</em></a><p>Surgical precision insight into who's actively searching for your service right now. Intent Data as a Service — DaaS 3.0.</p></div>
-    <div class="foot-col"><h5>PRODUCT</h5><ul><li><a href="#how">How It Works</a></li><li><a href="#solutions">Solutions</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#demo">Get a Sample</a></li></ul></div>
-    <div class="foot-col"><h5>SOLUTIONS</h5><ul><li><a href="#solutions">Real Estate</a></li><li><a href="#solutions">Local Services</a></li><li><a href="#solutions">Law Firms</a></li><li><a href="#solutions">Agencies</a></li></ul></div>
-    <div class="foot-col"><h5>LEGAL</h5><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">Data Processing</a></li><li><a href="#">Contact</a></li></ul></div>
+    <div>
+      <a href="#" class="foot-logo">INMARKET<em>.AI</em></a>
+      <p class="foot-desc">Surgical precision insight into who's actively searching for your service right now. Intent Data as a Service.</p>
+    </div>
+    <div class="foot-col"><h5>Product</h5><ul><li><a href="#how">How It Works</a></li><li><a href="#solutions">Solutions</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#demo">Get a Sample</a></li></ul></div>
+    <div class="foot-col"><h5>Solutions</h5><ul><li><a href="#solutions">Real Estate</a></li><li><a href="#solutions">Local Services</a></li><li><a href="#solutions">Law Firms</a></li><li><a href="#solutions">Agencies</a></li></ul></div>
+    <div class="foot-col"><h5>Legal</h5><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">Data Processing</a></li><li><a href="#">Contact</a></li></ul></div>
   </div>
-  <div class="foot-bottom"><span>© 2025 INMARKET.AI — ALL RIGHTS RESERVED</span><span>INTENT DATA AS A SERVICE · DAAS 3.0</span></div>
+  <div class="foot-bottom">
+    <span>© 2025 InMarket.ai — All Rights Reserved</span>
+    <span>Intent Data as a Service · DaaS 3.0</span>
+  </div>
 </footer>
 
 <script>
@@ -978,77 +1477,33 @@ footer{background:rgba(1,5,12,.99);border-top:1px solid var(--border);padding:72
 const cur=document.getElementById('cur'),cr=document.getElementById('cur-r');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
-(function aR(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(aR)})();
+(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(loop)})();
 
 // CANVAS PARTICLES
 const canvas=document.getElementById('hero-canvas');
 const ctx=canvas.getContext('2d');
-function rsz(){canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight}
-rsz();window.addEventListener('resize',rsz);
-
+function resize(){canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight}
+resize();window.addEventListener('resize',resize);
 const pts=[];
-for(let i=0;i<140;i++){
-  pts.push({
-    x:Math.random()*canvas.width,
-    y:Math.random()*canvas.height,
-    vx:(Math.random()-.5)*.35,
-    vy:(Math.random()-.5)*.35,
-    r:Math.random()*1.4+.2,
-    a:Math.random()*.7+.1,
-    c:Math.random()>.7
-  });
-}
-
-function drawPts(){
+for(let i=0;i<120;i++){pts.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.3+.2,a:Math.random()*.6+.1,c:Math.random()>.7})}
+function draw(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   pts.forEach(p=>{
     p.x+=p.vx;p.y+=p.vy;
     if(p.x<0||p.x>canvas.width)p.vx*=-1;
     if(p.y<0||p.y>canvas.height)p.vy*=-1;
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle=p.c?`rgba(0,212,255,${p.a})`:`rgba(150,210,255,${p.a*.5})`;
-    ctx.fill();
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=p.c?`rgba(0,212,255,${p.a})`:`rgba(150,210,255,${p.a*.5})`;ctx.fill();
   });
-  // connections
-  for(let i=0;i<pts.length;i++){
-    for(let j=i+1;j<pts.length;j++){
-      const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
-      const d=Math.sqrt(dx*dx+dy*dy);
-      if(d<90){
-        ctx.beginPath();
-        ctx.moveTo(pts[i].x,pts[i].y);
-        ctx.lineTo(pts[j].x,pts[j].y);
-        ctx.strokeStyle=`rgba(0,212,255,${.09*(1-d/90)})`;
-        ctx.lineWidth=.5;ctx.stroke();
-      }
-    }
+  for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+    const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+    if(d<90){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(0,212,255,${.08*(1-d/90)})`;ctx.lineWidth=.5;ctx.stroke()}
   }
-  requestAnimationFrame(drawPts);
+  requestAnimationFrame(draw);
 }
-drawPts();
+draw();
 
-// STEPS
-const steps=document.querySelectorAll('.step');
-const panels=document.querySelectorAll('.how-panel');
-let idx=0;
-steps.forEach(s=>s.addEventListener('click',()=>{
-  steps.forEach(x=>x.classList.remove('active'));
-  panels.forEach(p=>p.classList.remove('active'));
-  s.classList.add('active');
-  document.getElementById('panel-'+s.dataset.panel).classList.add('active');
-}));
-const cyc=setInterval(()=>{
-  idx=(idx+1)%steps.length;
-  steps.forEach(x=>x.classList.remove('active'));
-  panels.forEach(p=>p.classList.remove('active'));
-  steps[idx].classList.add('active');
-  document.getElementById('panel-'+steps[idx].dataset.panel).classList.add('active');
-},4000);
-
-// REVEAL
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.rv,.rv-l,.rv-r').forEach(el=>obs.observe(el));
-</script>
-</body>
-</html>
+// SCROLL REVEAL
+document.documentElement.classList.add('js-ready');
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.05,rootMargin:'0px 0px 0px 0px'});
+document.querySelecto
